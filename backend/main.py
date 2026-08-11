@@ -51,7 +51,7 @@ def search(request: SearchRequest):
                 video_id=f"L01_V0{i:02d}",
                 frame_id=1000 + i * 50,
                 score=0.99 - (i * 0.01),
-                thumbnail_url=f"https://picsum.photos/seed/{i}/300/200", # Ảnh giả để FE test
+                thumbnail_url=f"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo_HCMUT.png/640px-Logo_HCMUT.png", # Logo Bách Khoa tạm thời
                 answer="Đáp án mẫu" if request.query_type == "VQA" else None
             )
         )

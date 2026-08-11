@@ -79,8 +79,8 @@ function App() {
       {/* ── HEADER ── */}
       <header className="header">
         <div className="brand">
-          <div className="logo-icon">N</div>
-          <h1>AIC <span>Nexus</span></h1>
+          <div className="logo-icon">O</div>
+          <h1>Oreo<span>AndJuliet</span></h1>
         </div>
 
         <form className="search-wrapper" onSubmit={handleSearch}>
