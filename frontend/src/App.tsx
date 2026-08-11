@@ -18,8 +18,6 @@ function App() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [cart, setCart] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  
-  // Video Modal State
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   const handleSearch = async (e?: React.FormEvent) => {
@@ -40,138 +38,168 @@ function App() {
       if (data.status === 'success') {
         setResults(data.data);
       }
-    } catch (error) {
-      console.error("Lỗi khi gọi API Backend:", error);
-      alert("Chưa kết nối được Backend. Hãy đảm bảo uvicorn đang chạy ở port 8000.");
+    } catch {
+      alert("Cannot connect to Backend. Make sure uvicorn is running on port 8000.");
     } finally {
       setIsLoading(false);
     }
   };
 
+  const isInCart = (item: SearchResult) => 
+    !!cart.find(c => c.video_id === item.video_id && c.frame_id === item.frame_id);
+
   const addToCart = (item: SearchResult) => {
-    if (!cart.find(c => c.video_id === item.video_id && c.frame_id === item.frame_id)) {
-      setCart([...cart, item]);
+    if (!isInCart(item)) {
+      setCart(prev => [...prev, item]);
     }
   };
 
   const removeFromCart = (index: number) => {
-    const newCart = [...cart];
-    newCart.splice(index, 1);
-    setCart(newCart);
+    setCart(prev => prev.filter((_, i) => i !== index));
   };
 
   const exportToCodabench = async () => {
     if (cart.length === 0) return;
     const zip = new JSZip();
-    let csvContent = "";
+    let csv = "";
     cart.forEach(item => {
       if (item.answer) {
-        const safeAnswer = item.answer.replace(/"/g, '""');
-        csvContent += `${item.video_id},${item.frame_id},"${safeAnswer}"\n`;
+        csv += `${item.video_id},${item.frame_id},"${item.answer.replace(/"/g, '""')}"\n`;
       } else {
-        csvContent += `${item.video_id},${item.frame_id}\n`;
+        csv += `${item.video_id},${item.frame_id}\n`;
       }
     });
-    zip.file("query-results.csv", csvContent);
-    const content = await zip.generateAsync({ type: "blob" });
-    saveAs(content, "submission.zip");
-  };
-
-  const playVideo = (videoId: string) => {
-    setActiveVideo(`http://localhost:8000/static/videos/${videoId}.mp4`);
+    zip.file("query-results.csv", csv);
+    const blob = await zip.generateAsync({ type: "blob" });
+    saveAs(blob, "submission.zip");
   };
 
   return (
     <div className="app-container">
-      {/* HEADER */}
+      {/* ── HEADER ── */}
       <header className="header">
         <div className="brand">
-          <h1>AIC 2026 <span>Nexus</span></h1>
+          <div className="logo-icon">N</div>
+          <h1>AIC <span>Nexus</span></h1>
         </div>
-        
+
         <form className="search-wrapper" onSubmit={handleSearch}>
-          <select 
-            value={queryType} 
-            onChange={(e) => setQueryType(e.target.value)}
-            className="query-select"
-          >
+          <select value={queryType} onChange={e => setQueryType(e.target.value)} className="query-select">
             <option value="KIS">Text KIS</option>
-            <option value="VQA">Visual Q&A</option>
+            <option value="VQA">Visual QA</option>
             <option value="TRAKE">TRAKE</option>
           </select>
-          
+
           <div className="search-inputs">
-            <input 
-              type="text" 
-              placeholder={queryType === 'TRAKE' ? "Nhập chuỗi sự kiện (cách nhau bởi dấu phẩy)..." : "Nhập mô tả sự kiện..."}
+            <input
+              type="text"
+              placeholder={queryType === 'TRAKE' ? "Enter event sequence, comma separated..." : "Describe the scene you're looking for..."}
               value={textQuery}
-              onChange={(e) => setTextQuery(e.target.value)}
+              onChange={e => setTextQuery(e.target.value)}
               className="search-input"
             />
             {queryType === 'VQA' && (
-              <input 
-                type="text" 
-                placeholder="Nhập câu hỏi VQA..."
+              <input
+                type="text"
+                placeholder="Enter your question..."
                 value={questionQuery}
-                onChange={(e) => setQuestionQuery(e.target.value)}
+                onChange={e => setQuestionQuery(e.target.value)}
                 className="search-input question-input"
               />
             )}
           </div>
 
           <button type="submit" className="search-btn" disabled={isLoading}>
-            {isLoading ? 'Đang tìm...' : 'Khám phá'}
+            {isLoading ? 'Searching...' : 'Search'}
           </button>
         </form>
+
+        <div className="header-stats">
+          <div className="stat-pill">
+            <div className="stat-dot"></div>
+            <span>Results: </span>
+            <span className="stat-value">{results.length}</span>
+          </div>
+          <div className="stat-pill">
+            <span>Selected: </span>
+            <span className="stat-value">{cart.length}</span>
+          </div>
+        </div>
       </header>
 
-      {/* MAIN LAYOUT */}
+      {/* ── MAIN CONTENT ── */}
       <main className="main-content">
-        
-        {/* RESULTS AREA */}
         <section className="results-area">
+          {results.length > 0 && (
+            <div className="results-header">
+              <h2>Showing <strong>{results.length}</strong> results for "{textQuery || 'all'}"</h2>
+            </div>
+          )}
+
           <div className="results-grid">
-            {results.length === 0 && !isLoading && (
-              <div className="no-results">Vũ trụ dữ liệu đang chờ bạn khám phá. Nhập mô tả để bắt đầu.</div>
+            {isLoading && (
+              <div className="loading-container">
+                <div className="spinner"></div>
+                <p>Searching across video frames...</p>
+              </div>
             )}
-            
+
+            {results.length === 0 && !isLoading && (
+              <div className="empty-state">
+                <div className="empty-state-icon">🔍</div>
+                <h3>Ready to explore</h3>
+                <p>Describe a scene, event, or object to search through thousands of video frames instantly.</p>
+              </div>
+            )}
+
             {results.map((item, idx) => (
-              <div key={idx} className="result-card">
-                <div className="score-badge">Score <span>{item.score.toFixed(2)}</span></div>
-                
-                <div className="image-container" onClick={() => playVideo(item.video_id)}>
-                  <img src={item.thumbnail_url} alt="thumbnail" loading="lazy" />
+              <div key={`${item.video_id}-${item.frame_id}`} className="result-card">
+                <div className={`rank-badge ${idx < 3 ? 'top-3' : ''}`}>{idx + 1}</div>
+                <div className="score-badge">{item.score.toFixed(2)}</div>
+
+                <div className="image-container" onClick={() => setActiveVideo(`http://localhost:8000/static/videos/${item.video_id}.mp4`)}>
+                  <img src={item.thumbnail_url} alt={`Frame ${item.frame_id} from ${item.video_id}`} loading="lazy" />
                   <div className="play-overlay">
-                    {/* SVG Play Icon */}
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
+                    <div className="play-btn">
+                      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                    </div>
                   </div>
                 </div>
 
-                <div className="card-info">
+                <div className="card-body">
                   <div className="meta-row">
-                    <span className="meta-tag">Video: <strong>{item.video_id}</strong></span>
-                    <span className="meta-tag">Frame: <strong>{item.frame_id}</strong></span>
+                    <span className="meta-chip"><strong>{item.video_id}</strong></span>
+                    <span className="meta-chip">F: <strong>{item.frame_id}</strong></span>
                   </div>
-                  
+
                   {item.answer && (
                     <div className="answer-box">
-                      <label>AI Answer (Có thể sửa):</label>
-                      <input 
-                        type="text" 
-                        defaultValue={item.answer} 
-                        onChange={(e) => { item.answer = e.target.value; }}
+                      <label>AI Answer</label>
+                      <input
+                        type="text"
+                        defaultValue={item.answer}
+                        onChange={e => { item.answer = e.target.value; }}
                         className="edit-answer"
                       />
                     </div>
                   )}
-                  
-                  <button onClick={() => addToCart(item)} className="add-btn">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    Đưa vào giỏ
+
+                  <button
+                    onClick={() => addToCart(item)}
+                    className={`add-btn ${isInCart(item) ? 'added' : ''}`}
+                    disabled={isInCart(item)}
+                  >
+                    {isInCart(item) ? (
+                      <>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        Added
+                      </>
+                    ) : (
+                      <>
+                        <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4"/></svg>
+                        Add to selection
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -179,51 +207,56 @@ function App() {
           </div>
         </section>
 
-        {/* SIDEBAR CART */}
+        {/* ── SIDEBAR ── */}
         <aside className="sidebar">
-          <h2>Giỏ lựa chọn <span className="cart-count">{cart.length}</span></h2>
-          
+          <div className="sidebar-header">
+            <h2>
+              Selection
+              <span className={`cart-badge ${cart.length === 0 ? 'empty' : ''}`}>{cart.length}</span>
+            </h2>
+            <p className="sidebar-subtitle">Items ready for submission</p>
+          </div>
+
           <div className="cart-items">
             {cart.length === 0 ? (
-              <p className="empty-cart">Chưa có dữ liệu nào được chọn.</p>
+              <div className="empty-cart">
+                <div className="empty-cart-icon">📦</div>
+                <p>No items selected yet. Click "Add to selection" on any result card.</p>
+              </div>
             ) : (
               cart.map((item, idx) => (
-                <div key={idx} className="cart-item">
-                  <img src={item.thumbnail_url} alt="cart thumb" />
+                <div key={`cart-${item.video_id}-${item.frame_id}`} className="cart-item">
+                  <img src={item.thumbnail_url} alt="thumb" />
                   <div className="cart-item-info">
                     <p className="vid-id">{item.video_id}</p>
-                    <p className="frm-id">Frame: {item.frame_id}</p>
+                    <p className="frm-id">Frame {item.frame_id}</p>
                   </div>
-                  <button onClick={() => removeFromCart(idx)} className="remove-btn">
-                    ✕
-                  </button>
+                  <button onClick={() => removeFromCart(idx)} className="remove-btn" title="Remove">✕</button>
                 </div>
               ))
             )}
           </div>
 
-          <button 
-            onClick={exportToCodabench} 
-            className="export-btn" 
-            disabled={cart.length === 0}
-          >
-            Xuất ZIP Codabench
-          </button>
+          <div className="sidebar-footer">
+            <button onClick={exportToCodabench} className="export-btn" disabled={cart.length === 0}>
+              <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Export ZIP for Codabench
+            </button>
+          </div>
         </aside>
       </main>
 
-      {/* VIDEO MODAL */}
+      {/* ── VIDEO MODAL ── */}
       {activeVideo && (
         <div className="modal-overlay" onClick={() => setActiveVideo(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
-              <h3>Preview Video</h3>
+              <h3>Video Preview</h3>
               <button className="close-modal" onClick={() => setActiveVideo(null)}>✕</button>
             </div>
-            
-            <div className="video-placeholder">
-              <p>Mô phỏng phát Video từ Backend</p>
-              <p className="video-url">{activeVideo}</p>
+            <div className="video-container">
+              <p>Video playback will connect here once backend serves MP4 files.</p>
+              <span className="video-url-badge">{activeVideo}</span>
             </div>
           </div>
         </div>
