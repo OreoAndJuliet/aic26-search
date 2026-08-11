@@ -1,0 +1,45 @@
+update
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+
+1) Final code state (already done)
+Env load order fixed in main.py
+VQA switched to Gemini SDK in vqa_engine.py
+Clear API error mapping in search.py
+KIS lazy model loading in kis_engine.py
+Model checker in checkmodel.py
+2) Required env config
+In .env:
+GEMINI_API_KEY=YOUR_VALID_KEY
+GEMINI_MODEL=gemini-flash-lite-latest
+(Use a model your key can actually call.)
+
+3) Required Python packages
+Install in deployment venv:
+pip install fastapi uvicorn python-dotenv sentence-transformers faiss-cpu torch google-genai pydantic Pillow torchvision
+4) Required data/runtime folders
+Must exist in deploy folder:
+
+app/
+data/
+static/
+main.py
+5) Start command
+python -m uvicorn main:app --host 0.0.0.0 --port 8000
+6) Smoke tests
+Root:Invoke-RestMethod "http://127.0.0.1:8000/"
+VQA:
+$payload = @{
+    type     = "VQA"
+    text     = "đoàn người đang di chuyển"
+    question = "What logo is shown?"
+    top_k    = 5
+} | ConvertTo-Json -Compress
+
+$utf8Body = [System.Text.Encoding]::UTF8.GetBytes($payload)
+
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/api/v1/search" `
+                  -Method Post `
+                  -ContentType "application/json; charset=utf-8" `
+                  -Body $utf8Body | ConvertTo-Json -Depth 8
