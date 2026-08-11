@@ -95,3 +95,18 @@ git push origin fe/cart-feature
 ## 📚 Tài liệu tham khảo thêm
 - [CONTRIBUTING.md](./CONTRIBUTING.md): Phân chia nhiệm vụ cụ thể của Giai đoạn 1 và 2.
 - [Dac_Ta_AIC_2026.docx](./Dac_Ta_AIC_2026.docx): Tài liệu đặc tả yêu cầu chi tiết từ BTC.
+psh:
+
+$payload = @{
+    type     = "VQA"
+    text     = "đoàn người đang di chuyển"
+    question = "What logo is shown?"
+    top_k    = 5
+} | ConvertTo-Json -Compress
+
+$utf8Body = [System.Text.Encoding]::UTF8.GetBytes($payload)
+
+Invoke-RestMethod -Uri "http://127.0.0.1:8000/api/v1/search" `
+                  -Method Post `
+                  -ContentType "application/json; charset=utf-8" `
+                  -Body $utf8Body | ConvertTo-Json -Depth 8
