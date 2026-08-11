@@ -1,0 +1,17 @@
+# Environments
+venv/
+env/
+.venv/
+
+# Secrets
+.env
+
+# Large Assets & Data (5GB files)
+static/
+data/
+
+# Cache & IDE Folders
+__pycache__/
+.vs/
+.ruff_cache/
+*.pyc
