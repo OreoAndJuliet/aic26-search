@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+# faiss-cpu # Bỏ comment khi sẵn sàng tích hợp FAISS
+# numpy
