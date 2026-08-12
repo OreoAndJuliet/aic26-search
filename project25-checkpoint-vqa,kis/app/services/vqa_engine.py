@@ -49,6 +49,10 @@ class VQAEngine:
         text = (response.text or "").strip()
         return text[:100]
 
+    def answer_single_image(self, image_path: Path, question: str) -> str:
+        """Answer one image question for the JSON-to-VLM fallback path."""
+        return self._answer_image(image_path, question)
+
     def answer(self, top_kis_results: list[dict[str, Any]], question: str):
         if not question.strip():
             return []

@@ -31,11 +31,11 @@ def build_real_faiss_index():
         if os.path.isdir(os.path.join(keyframes_dir, name))
     }
     
-    print("Scanning feature files...")
+    print("⏳ Scanning feature files...")
     npy_files = sorted(glob.glob(os.path.join(features_dir, "**", "*.npy"), recursive=True))
     
     if not npy_files:
-        print("No .npy files found. Make sure features are extracted into data/features/")
+        print("⚠️ No .npy files found! Make sure features are extracted into data/features/")
         return
 
     all_vectors = []
@@ -66,19 +66,24 @@ def build_real_faiss_index():
             )
 
         for row_idx, map_row in enumerate(keyframe_map):
+            keyframe_id = int(map_row["n"])
+
             metadata.append({
                 "vector_id": current_vector_idx,
                 "video_id": video_id,
-                "keyframe_id": int(map_row["n"]),
+                "keyframe_id": keyframe_id,
                 "frame_id": int(map_row["frame_idx"]),
+                "timestamp": float(map_row["pts_time"]),
+                "image_path": f"static/keyframes/{video_id}/{keyframe_id:03d}.jpg",
             })
+
             current_vector_idx += 1
 
     # Stack all feature arrays into one big matrix
     full_matrix = np.vstack(all_vectors)
     dimension = full_matrix.shape[1]
 
-    print(f"Loaded {full_matrix.shape[0]} total vectors ({dimension}-dimensional). Building FAISS index...")
+    print(f"✅ Loaded {full_matrix.shape[0]} total vectors ({dimension}-dimensional). Building FAISS Index...")
 
     # Build FAISS Flat Inner Product Index (Cosine Similarity)
     index = faiss.IndexFlatIP(dimension)
@@ -91,7 +96,7 @@ def build_real_faiss_index():
     with open(os.path.join("data", "metadata.json"), "w", encoding="utf-8") as f:
         json.dump(metadata, f, ensure_ascii=False, indent=2)
 
-    print("FAISS index successfully built at data/faiss_index.bin.")
+    print("🎉 Real FAISS Index successfully built at data/faiss_index.bin!")
 
 if __name__ == "__main__":
     build_real_faiss_index()

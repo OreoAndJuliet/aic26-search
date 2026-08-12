@@ -11,6 +11,8 @@ class Settings:
     # CLIP checkpoint used for the shared text/image embedding space.
     CLIP_MODEL_NAME: str = "sentence-transformers/clip-ViT-B-32"
 
+    # OpenAI Vision-Language Model used by the VQA endpoint.  The API key is
+    # read from the OPENAI_API_KEY environment variable, never source code.
     OPENAI_VQA_MODEL: str = "gpt-4o"
     
     # URL tĩnh trả về cho Frontend

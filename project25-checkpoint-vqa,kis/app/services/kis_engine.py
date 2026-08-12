@@ -44,8 +44,14 @@ class KISEngine:
             raise RuntimeError(self.model_load_error) from exc
 
     def search(self, english_text: str, top_k: int = 50):
-        if not self.index:
+        if self.index is None or self.index.ntotal == 0:
             return []
+        
+        if top_k < 1:
+            raise ValueError("top_k must be at least 1")
+
+        top_k = min(top_k, self.index.ntotal)
+        
         self._ensure_model_loaded()
 
         # 1. Đưa text qua CLIP Text Encoder.  FAISS contains L2-normalized
@@ -56,32 +62,39 @@ class KISEngine:
             convert_to_numpy=True,
         ).astype("float32")
 
+        
+        
         # 2. Tìm kiếm trên FAISS Index
         scores, indices = self.index.search(query_vector, top_k)
 
         results = []
+
         for score, idx in zip(scores[0], indices[0]):
-            if idx < len(self.metadata):
+            if 0 <= idx < len(self.metadata):
                 item = self.metadata[idx]
                 v_id = item["video_id"]
                 f_id = item["frame_id"]
-                # New indexes store the JPEG number separately from the source
-                # video frame number.  The fallback preserves old indexes until
-                # they are rebuilt.
+
+        # keyframe_id is the JPEG filename number; frame_id is the original video frame.
                 keyframe_id = item.get("keyframe_id", f_id)
 
-                thumb_url = (
+                image_url = (
                     f"{settings.BACKEND_HOST}/static/keyframes/"
                     f"{v_id}/{int(keyframe_id):03d}.jpg"
                 )
+
+                raw_score = float(score)
+                normalized_score = max(0.0, min(1.0, (raw_score + 1.0) / 2.0))
+
                 results.append({
                     "video_id": v_id,
                     "frame_id": f_id,
                     "keyframe_id": int(keyframe_id),
-                    "thumbnail_url": thumb_url,
-                    "score": float(score),
-                    "answer": None
-                })
+                    "image_url": image_url,
+                    "score": normalized_score,
+                    "raw_cosine_score": raw_score,
+                    "answer": None,
+        })
 
         return results
 
