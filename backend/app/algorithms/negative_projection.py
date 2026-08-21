@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 # Multilingual negative constraint regex patterns
 NEGATIVE_PATTERNS: list[tuple[str, str, str]] = [
     # (Regex pattern, positive entity fallback, negative entity fallback)
+    # --- Vietnamese patterns ---
     (r"\bkhông (đội|mang|có) (mũ|nón) bảo hiểm\b", "person riding motorbike motorcycle", "helmet safety helmet on head"),
     (r"\bkhông (đội|mang) (mũ|nón)\b", "person", "hat cap helmet on head"),
     (r"\bkhông (mặc|có) áo\b", "shirtless person bare chest", "shirt jacket clothes upper body"),
@@ -24,9 +25,19 @@ NEGATIVE_PATTERNS: list[tuple[str, str, str]] = [
     (r"\bkhông có (người|nguoi)\b", "empty scene street background", "person people human"),
     (r"\bkhông có (xe|ô tô|xe hơi)\b", "empty road pedestrian zone", "car automobile vehicle"),
     (r"\bkhông phải màu (\w+)\b", "object", "color \\1"),
+    # --- English patterns (exact + Google Translate variants) ---
     (r"\bwithout (a |an )?helmet\b", "motorcyclist riding motorbike", "helmet safety helmet on head"),
-    (r"\bno (people|person)\b", "empty background landscape", "person people human"),
+    (r"\bnot wearing (a |an )?helmet\b", "motorcyclist riding motorbike", "helmet safety helmet on head"),
+    (r"\bno helmet\b", "motorcyclist riding motorbike", "helmet safety helmet on head"),
+    (r"\bwithout (wearing )?(a |an )?shirt\b", "shirtless person bare chest", "shirt jacket clothes upper body"),
+    (r"\bnot wearing (a |an )?shirt\b", "shirtless person bare chest", "shirt jacket clothes upper body"),
+    (r"\bshirtless\b", "shirtless person bare chest", "shirt jacket clothes upper body"),
     (r"\bwithout (a |an )?mask\b", "unmasked face", "face mask surgical mask"),
+    (r"\bnot wearing (a |an )?mask\b", "unmasked face", "face mask surgical mask"),
+    (r"\bno mask\b", "unmasked face", "face mask surgical mask"),
+    (r"\bno (people|person|one)\b", "empty background landscape", "person people human"),
+    (r"\bwithout (a |an )?seatbelt\b", "driver in car", "seatbelt safety belt"),
+    (r"\bnot wearing (a |an )?seatbelt\b", "driver in car", "seatbelt safety belt"),
 ]
 
 

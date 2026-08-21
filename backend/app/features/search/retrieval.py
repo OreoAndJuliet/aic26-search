@@ -151,9 +151,9 @@ def run_kis_retrieval(
     except Exception as exc:
         logger.warning("smart_scan_failed: %s", exc)
 
-    results = rerank_kis_by_objects(translated_text, results)
-    results = rerank_kis_by_media_info(translated_text, results)
-    results = rerank_hybrid_results(translated_text, results, task_type="KIS")
+    results = rerank_kis_by_objects(lookup_text, results)
+    results = rerank_kis_by_media_info(lookup_text, results)
+    results = rerank_hybrid_results(lookup_text, results, task_type="KIS")
     results = apply_temporal_smoothing(results)
 
     # Crop-Level Regional CLIP Alignment
@@ -191,10 +191,13 @@ def run_kis_retrieval(
     except Exception as exc:
         logger.debug("spatial_roi_pooling_failed: %s", exc)
 
-    # Negative Constraint Penalty
+    # Negative Constraint Penalty — run on BOTH Vietnamese (raw) and English (translated)
     try:
         from app.algorithms.negative_projection import extract_negative_constraint
-        has_neg, pos_text, neg_text = extract_negative_constraint(translated_text)
+        # Try Vietnamese raw query first (more reliable patterns), fallback to English
+        has_neg, pos_text, neg_text = extract_negative_constraint(raw_query or translated_text)
+        if not has_neg:
+            has_neg, pos_text, neg_text = extract_negative_constraint(translated_text)
         if has_neg and neg_text and results:
             v_neg = kis_engine.encode_query_vector(neg_text)
             norm_neg = np.linalg.norm(v_neg)

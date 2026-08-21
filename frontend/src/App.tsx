@@ -31,7 +31,7 @@ function App() {
           query_type: queryType,
           text: textQuery,
           question: questionQuery,
-          top_k: 50
+          top_k: 100
         })
       });
       const data = await response.json();
