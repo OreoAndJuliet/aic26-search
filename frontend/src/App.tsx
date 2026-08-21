@@ -11,6 +11,8 @@ interface SearchResult {
   answer?: string;
 }
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 function App() {
   const [queryType, setQueryType] = useState('KIS');
   const [textQuery, setTextQuery] = useState('');
@@ -24,7 +26,7 @@ function App() {
     if (e) e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:8000/api/v1/search', {
+      const response = await fetch(`${API_BASE}/api/v1/search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -157,7 +159,7 @@ function App() {
                 <div className={`rank-badge ${idx < 3 ? 'top-3' : ''}`}>{idx + 1}</div>
                 <div className="score-badge">{item.score.toFixed(2)}</div>
 
-                <div className="image-container" onClick={() => setActiveVideo(`http://localhost:8000/static/videos/${item.video_id}.mp4`)}>
+                <div className="image-container" onClick={() => setActiveVideo(`${API_BASE}/static/videos/${item.video_id}.mp4`)}>
                   <img src={item.thumbnail_url} alt={`Frame ${item.frame_id} from ${item.video_id}`} loading="lazy" />
                   <div className="play-overlay">
                     <div className="play-btn">
