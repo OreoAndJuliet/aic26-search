@@ -22,6 +22,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [isRebuilding, setIsRebuilding] = useState(false);
+  const [queryId, setQueryId] = useState<number>(1);
+  const [lastTrakeMeta, setLastTrakeMeta] = useState<any>(null);
 
   const handleRebuildIndex = async () => {
     if (!window.confirm("Are you sure you want to rebuild the FAISS index from .npy features? This may take some time depending on data size.")) return;
@@ -66,6 +68,7 @@ function App() {
       const data = await response.json();
       if (data.status === 'success') {
         setResults(data.data);
+        setLastTrakeMeta(data.trake || null);
       }
     } catch {
       alert("Cannot connect to Backend. Make sure uvicorn is running on port 8000.");
@@ -89,18 +92,34 @@ function App() {
 
   const exportToCodabench = async () => {
     if (cart.length === 0) return;
-    const zip = new JSZip();
-    let csv = "";
-    cart.forEach(item => {
-      if (item.answer) {
-        csv += `${item.video_id},${item.frame_id},"${item.answer.replace(/"/g, '""')}"\n`;
+    
+    try {
+      const payload = {
+        task_type: queryType,
+        results: cart.map(item => ({
+          video_id: item.video_id,
+          frame_id: item.frame_id,
+          answer: item.answer || ""
+        })),
+        trake_meta: lastTrakeMeta,
+        query_id: queryId
+      };
+
+      const res = await fetch(`${API_BASE}/api/export/submission`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (data.status === 'SUCCESS' && data.zip_download_url) {
+        window.location.href = `${API_BASE}${data.zip_download_url}`;
       } else {
-        csv += `${item.video_id},${item.frame_id}\n`;
+        alert("Export failed: " + (data.validation_errors?.join(", ") || "Unknown error"));
       }
-    });
-    zip.file("query-results.csv", csv);
-    const blob = await zip.generateAsync({ type: "blob" });
-    saveAs(blob, "submission.zip");
+    } catch (err) {
+      alert("Failed to export submission. Check backend logs.");
+    }
   };
 
   return (
@@ -276,6 +295,15 @@ function App() {
           </div>
 
           <div className="sidebar-footer">
+            <div className="query-id-input">
+              <label>Query ID:</label>
+              <input 
+                type="number" 
+                min="1" 
+                value={queryId} 
+                onChange={e => setQueryId(parseInt(e.target.value) || 1)} 
+              />
+            </div>
             <button onClick={exportToCodabench} className="export-btn" disabled={cart.length === 0}>
               <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
               Export ZIP for Codabench
