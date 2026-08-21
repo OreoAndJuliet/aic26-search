@@ -293,8 +293,11 @@ function App() {
               <button className="close-modal" onClick={() => setActiveVideo(null)}>✕</button>
             </div>
             <div className="video-container">
-              <p>Video playback will connect here once backend serves MP4 files.</p>
-              <span className="video-url-badge">{activeVideo}</span>
+              <video controls autoPlay style={{ width: '100%', borderRadius: '12px', background: '#000' }}>
+                <source src={activeVideo} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              <span className="video-url-badge" style={{ marginTop: '10px', display: 'inline-block' }}>{activeVideo}</span>
             </div>
           </div>
         </div>

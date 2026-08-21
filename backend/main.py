@@ -87,11 +87,15 @@ app.include_router(media.router)
 settings.KEYFRAMES_DIR.mkdir(parents=True, exist_ok=True)
 settings.STATIC_DIR.mkdir(parents=True, exist_ok=True)
 settings.SUBMISSION_DIR.mkdir(parents=True, exist_ok=True)
+settings.VIDEOS_DIR.mkdir(parents=True, exist_ok=True)
 
 keyframes_path = str(settings.KEYFRAMES_DIR)
 app.mount("/keyframes", StaticFiles(directory=keyframes_path), name="keyframes")
 
-# 4. Serve static files at legacy path for backward compatibility
+# 4. Serve video files
+app.mount("/static/videos", StaticFiles(directory=str(settings.VIDEOS_DIR)), name="videos")
+
+# 5. Serve static files at legacy path for backward compatibility
 app.mount("/static", StaticFiles(directory=str(settings.STATIC_DIR)), name="static")
 app.mount(
     "/submission",
