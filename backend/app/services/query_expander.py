@@ -61,14 +61,20 @@ class QueryExpanderService:
         except Exception:
             pass
 
-    def _expand_with_templates(self, query: str, num_variations: int = 2) -> list[str]:
-        """Generate visual template descriptions for zero-latency offline expansion."""
+    def _expand_with_templates(self, query: str, num_variations: int = 4) -> list[str]:
+        """Generate visual template descriptions for zero-latency offline expansion.
+        
+        Templates are optimized for the AIC dataset which consists primarily of
+        Vietnamese news broadcast video keyframes.
+        """
         clean_q = query.strip()
         templates = [
             f"a photo of {clean_q}",
             f"a video frame showing {clean_q}",
+            f"Vietnamese news broadcast showing {clean_q}",
+            f"outdoor scene with {clean_q}",
             f"a clear image of {clean_q}",
-            f"scene with {clean_q}",
+            f"a close-up of {clean_q}",
         ]
         return templates[:num_variations]
 

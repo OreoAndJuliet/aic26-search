@@ -38,7 +38,21 @@ def _is_heavy_ai_allowed() -> bool:
 
 
 def determine_adaptive_candidate_pool_size(query: str, requested_top_k: int) -> int:
-    return min(requested_top_k, 100)
+    """Return a larger candidate pool so all downstream rerankers have material to work with.
+
+    With 177,321 vectors, returning only min(top_k, 100) = 50 candidates defeats
+    every reranking stage.  The expanded pool is truncated back to top_k after
+    all rerankers run (see bottom of run_kis_retrieval).
+    """
+    # Complex multi-word queries benefit from a wider net
+    word_count = len(query.strip().split())
+    if word_count >= 6:
+        base_pool = 1500
+    elif word_count >= 3:
+        base_pool = 1000
+    else:
+        base_pool = 500
+    return max(base_pool, requested_top_k * 10)
 
 
 def run_kis_retrieval(
