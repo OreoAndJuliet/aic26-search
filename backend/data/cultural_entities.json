@@ -1,0 +1,140 @@
+{
+  "csgt": {
+    "patterns": [
+      "\\bcsgt\\b",
+      "\\bcảnh sát giao thông\\b",
+      "\\bchú csgt\\b",
+      "\\bcông an giao thông\\b",
+      "\\bcông an áo vàng\\b"
+    ],
+    "canonical_en": "traffic police officer in beige yellow uniform with traffic wand cap",
+    "keywords": [
+      "yellow uniform",
+      "police badge",
+      "traffic wand",
+      "officer cap",
+      "traffic control"
+    ]
+  },
+  "ganh_hang_rong": {
+    "patterns": [
+      "\\bgánh hàng rong\\b",
+      "\\bbán hàng rong\\b",
+      "\\bngười gánh hàng\\b",
+      "\\bđòn gánh\\b"
+    ],
+    "canonical_en": "street vendor carrying shoulder pole with two baskets conical hat",
+    "keywords": [
+      "shoulder pole",
+      "woven baskets",
+      "street vendor",
+      "conical non la"
+    ]
+  },
+  "ninja": {
+    "patterns": [
+      "\\bninja\\b",
+      "\\báo chống nắng ninja\\b",
+      "\\bnữ ninja\\b",
+      "\\bnin ja\\b"
+    ],
+    "canonical_en": "person wearing full sun UV protection hoodie jacket mask face cover sunglasses riding motorbike",
+    "keywords": [
+      "sun protective clothing",
+      "hoodie jacket",
+      "face mask",
+      "gloves",
+      "female motorbike rider"
+    ]
+  },
+  "shipper": {
+    "patterns": [
+      "\\bshipper\\b",
+      "\\banh shipper\\b",
+      "\\bngười giao hàng\\b",
+      "\\bgiao hàng\\b",
+      "\\bshiper\\b"
+    ],
+    "canonical_en": "delivery driver courier with large thermal backpack delivery box on motorbike",
+    "keywords": [
+      "delivery box",
+      "courier backpack",
+      "insulated bag",
+      "cargo rack",
+      "delivery parcel"
+    ]
+  },
+  "xe_banh_mi": {
+    "patterns": [
+      "\\bxe bánh mì\\b",
+      "\\btủ bánh mì\\b",
+      "\\bquán bánh mì\\b"
+    ],
+    "canonical_en": "vietnamese banh mi sandwich glass cart display stall on sidewalk",
+    "keywords": [
+      "glass display cart",
+      "baguettes",
+      "street food stall"
+    ]
+  },
+  "xe_keo_hang": {
+    "patterns": [
+      "\\bxe kéo hàng\\b",
+      "\\bxe ba gác\\b",
+      "\\bxe đẩy hàng\\b",
+      "\\bxe xích lô\\b"
+    ],
+    "canonical_en": "three-wheeled cargo cart tricycle handcart loaded with goods boxes",
+    "keywords": [
+      "cargo cart",
+      "loaded merchandise",
+      "flatbed cart",
+      "handcart"
+    ]
+  },
+  "xe_nuoc_mia": {
+    "patterns": [
+      "\\bxe nước mía\\b",
+      "\\bquán nước mía\\b",
+      "\\bmáy ép mía\\b"
+    ],
+    "canonical_en": "sugarcane juice press cart stall with stalks of sugarcane",
+    "keywords": [
+      "sugarcane press",
+      "juice stall",
+      "beverage cart",
+      "street stall"
+    ]
+  },
+  "xe_om_cong_nghe": {
+    "patterns": [
+      "\\bxe ôm công nghệ\\b",
+      "\\btài xế công nghệ\\b",
+      "\\bxe ôm grab\\b",
+      "\\btài xế grab\\b",
+      "\\btài xế be\\b"
+    ],
+    "canonical_en": "ride-hailing motorbike driver wearing green or yellow uniform jacket helmet Grab Be Gojek",
+    "keywords": [
+      "ride hailing jacket",
+      "green helmet",
+      "yellow jacket",
+      "smartphone phone mount"
+    ]
+  },
+  "xe_ve_chai": {
+    "patterns": [
+      "\\bxe ve chai\\b",
+      "\\bngười mua ve chai\\b",
+      "\\blượm ve chai\\b",
+      "\\bthu gom phế liệu\\b"
+    ],
+    "canonical_en": "person pushing cart collecting recyclable scrap cardboard bottles",
+    "keywords": [
+      "scrap collector",
+      "recycling cart",
+      "cardboard scrap",
+      "conical hat"
+    ]
+  }
+}

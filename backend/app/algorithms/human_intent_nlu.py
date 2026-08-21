@@ -8,75 +8,40 @@ from __future__ import annotations
 
 import logging
 import re
+import json
+from pathlib import Path
 from dataclasses import dataclass, field
 
 logger = logging.getLogger(__name__)
 
 # Culture-specific attire, occupations, and colloquial entity mappings
-VIETNAMESE_CULTURAL_ENTITIES: dict[str, dict[str, str | list[str]]] = {
-    "ninja": {
-        "patterns": [r"\bninja\b", r"\báo chống nắng ninja\b", r"\bnữ ninja\b", r"\bnin ja\b"],
-        "canonical_en": "person wearing full sun UV protection hoodie jacket mask face cover sunglasses riding motorbike",
-        "keywords": ["sun protective clothing", "hoodie jacket", "face mask", "gloves", "female motorbike rider"],
-    },
-    "shipper": {
-        "patterns": [r"\bshipper\b", r"\banh shipper\b", r"\bngười giao hàng\b", r"\bgiao hàng\b", r"\bshiper\b"],
-        "canonical_en": "delivery driver courier with large thermal backpack delivery box on motorbike",
-        "keywords": ["delivery box", "courier backpack", "insulated bag", "cargo rack", "delivery parcel"],
-    },
-    "csgt": {
-        "patterns": [r"\bcsgt\b", r"\bcảnh sát giao thông\b", r"\bchú csgt\b", r"\bcông an giao thông\b", r"\bcông an áo vàng\b"],
-        "canonical_en": "traffic police officer in beige yellow uniform with traffic wand cap",
-        "keywords": ["yellow uniform", "police badge", "traffic wand", "officer cap", "traffic control"],
-    },
-    "xe_om_cong_nghe": {
-        "patterns": [r"\bxe ôm công nghệ\b", r"\btài xế công nghệ\b", r"\bxe ôm grab\b", r"\btài xế grab\b", r"\btài xế be\b"],
-        "canonical_en": "ride-hailing motorbike driver wearing green or yellow uniform jacket helmet Grab Be Gojek",
-        "keywords": ["ride hailing jacket", "green helmet", "yellow jacket", "smartphone phone mount"],
-    },
-    "xe_keo_hang": {
-        "patterns": [r"\bxe kéo hàng\b", r"\bxe ba gác\b", r"\bxe đẩy hàng\b", r"\bxe xích lô\b"],
-        "canonical_en": "three-wheeled cargo cart tricycle handcart loaded with goods boxes",
-        "keywords": ["cargo cart", "loaded merchandise", "flatbed cart", "handcart"],
-    },
-    "xe_ve_chai": {
-        "patterns": [r"\bxe ve chai\b", r"\bngười mua ve chai\b", r"\blượm ve chai\b", r"\bthu gom phế liệu\b"],
-        "canonical_en": "person pushing cart collecting recyclable scrap cardboard bottles",
-        "keywords": ["scrap collector", "recycling cart", "cardboard scrap", "conical hat"],
-    },
-    "ganh_hang_rong": {
-        "patterns": [r"\bgánh hàng rong\b", r"\bbán hàng rong\b", r"\bngười gánh hàng\b", r"\bđòn gánh\b"],
-        "canonical_en": "street vendor carrying shoulder pole with two baskets conical hat",
-        "keywords": ["shoulder pole", "woven baskets", "street vendor", "conical non la"],
-    },
-    "xe_nuoc_mia": {
-        "patterns": [r"\bxe nước mía\b", r"\bquán nước mía\b", r"\bmáy ép mía\b"],
-        "canonical_en": "sugarcane juice press cart stall with stalks of sugarcane",
-        "keywords": ["sugarcane press", "juice stall", "beverage cart", "street stall"],
-    },
-    "xe_banh_mi": {
-        "patterns": [r"\bxe bánh mì\b", r"\btủ bánh mì\b", r"\bquán bánh mì\b"],
-        "canonical_en": "vietnamese banh mi sandwich glass cart display stall on sidewalk",
-        "keywords": ["glass display cart", "baguettes", "street food stall"],
-    },
-}
+VIETNAMESE_CULTURAL_ENTITIES: dict[str, dict[str, str | list[str]]] = {}
 
 # Compound actions and simultaneous gestures
-COMPOUND_ACTION_PATTERNS: list[tuple[str, str]] = [
-    (r"\bvừa đi vừa (bấm|xem|dùng|lướt) điện thoại\b", "person riding motorbike while looking at smartphone handheld phone"),
-    (r"\bvừa lái xe vừa (nghe|gọi) điện thoại\b", "driver holding smartphone to ear while driving vehicle"),
-    (r"\bngười đi bộ.*(băng|qua|sang|bước).*đường.*(vạch|kẻ|vạch kẻ|trắng)?\b", "pedestrian walking across crosswalk zebra crossing line street"),
-    (r"\bngười đi bộ bước trên vạch kẻ đường\b", "pedestrian walking across crosswalk zebra crossing line street"),
-    (r"\b(vượt|chạy) đèn đỏ\b", "vehicle running red traffic light intersection"),
-    (r"\bchở (hàng|đồ) cồng kềnh\b", "motorbike overloaded with bulky oversized cargo packages boxes"),
-    (r"\bchở (ba|bốn|nhiều) người\b", "motorbike carrying multiple three four passengers without helmets"),
-    (r"\bngười? ngồi uống cà phê( vỉa hè| bàn ghế)?\b", "people sitting on low plastic stools drinking coffee on street sidewalk cafe"),
-    (r"\bdắt chó đi dạo\b", "person walking leashed dog in park or on sidewalk"),
-    (r"\bmặc áo mưa (chạy|đi) xe\b", "motorcyclist wearing poncho raincoat riding in rain"),
-    (r"\b(đeo|mang) đồng hồ\b", "person wearing wristwatch wrist watch on hand"),
-    (r"\bxe buýt màu xanh( lá| lá cây)?\b", "green city bus public transit vehicle on road"),
-    (r"\bbàn (bằng )?gỗ\b", "wooden dining table wooden furniture in kitchen or room"),
-]
+COMPOUND_ACTION_PATTERNS: list[tuple[str, str]] = []
+
+def _load_datasets():
+    global VIETNAMESE_CULTURAL_ENTITIES, COMPOUND_ACTION_PATTERNS
+    data_dir = Path(__file__).resolve().parent.parent.parent / "data"
+    
+    cultural_path = data_dir / "cultural_entities.json"
+    if cultural_path.exists():
+        try:
+            with open(cultural_path, "r", encoding="utf-8") as f:
+                VIETNAMESE_CULTURAL_ENTITIES = json.load(f)
+        except Exception as e:
+            logger.error(f"Failed to load cultural_entities.json: {e}")
+            
+    actions_path = data_dir / "action_mappings.json"
+    if actions_path.exists():
+        try:
+            with open(actions_path, "r", encoding="utf-8") as f:
+                raw_actions = json.load(f)
+                COMPOUND_ACTION_PATTERNS = [(item["pattern"], item["canonical_en"]) for item in raw_actions]
+        except Exception as e:
+            logger.error(f"Failed to load action_mappings.json: {e}")
+
+_load_datasets()
 
 # Negative constraint markers
 NEGATIVE_MARKERS_VI: list[str] = [

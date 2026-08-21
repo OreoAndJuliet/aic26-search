@@ -1,0 +1,54 @@
+[
+  {
+    "pattern": "\\b(vượt|chạy) đèn đỏ\\b",
+    "canonical_en": "vehicle running red traffic light intersection"
+  },
+  {
+    "pattern": "\\b(đeo|mang) đồng hồ\\b",
+    "canonical_en": "person wearing wristwatch wrist watch on hand"
+  },
+  {
+    "pattern": "\\bbàn (bằng )?gỗ\\b",
+    "canonical_en": "wooden dining table wooden furniture in kitchen or room"
+  },
+  {
+    "pattern": "\\bchở (ba|bốn|nhiều) người\\b",
+    "canonical_en": "motorbike carrying multiple three four passengers without helmets"
+  },
+  {
+    "pattern": "\\bchở (hàng|đồ) cồng kềnh\\b",
+    "canonical_en": "motorbike overloaded with bulky oversized cargo packages boxes"
+  },
+  {
+    "pattern": "\\bdắt chó đi dạo\\b",
+    "canonical_en": "person walking leashed dog in park or on sidewalk"
+  },
+  {
+    "pattern": "\\bmặc áo mưa (chạy|đi) xe\\b",
+    "canonical_en": "motorcyclist wearing poncho raincoat riding in rain"
+  },
+  {
+    "pattern": "\\bngười đi bộ bước trên vạch kẻ đường\\b",
+    "canonical_en": "pedestrian walking across crosswalk zebra crossing line street"
+  },
+  {
+    "pattern": "\\bngười đi bộ.*(băng|qua|sang|bước).*đường.*(vạch|kẻ|vạch kẻ|trắng)?\\b",
+    "canonical_en": "pedestrian walking across crosswalk zebra crossing line street"
+  },
+  {
+    "pattern": "\\bngười? ngồi uống cà phê( vỉa hè| bàn ghế)?\\b",
+    "canonical_en": "people sitting on low plastic stools drinking coffee on street sidewalk cafe"
+  },
+  {
+    "pattern": "\\bvừa lái xe vừa (nghe|gọi) điện thoại\\b",
+    "canonical_en": "driver holding smartphone to ear while driving vehicle"
+  },
+  {
+    "pattern": "\\bvừa đi vừa (bấm|xem|dùng|lướt) điện thoại\\b",
+    "canonical_en": "person riding motorbike while looking at smartphone handheld phone"
+  },
+  {
+    "pattern": "\\bxe buýt màu xanh( lá| lá cây)?\\b",
+    "canonical_en": "green city bus public transit vehicle on road"
+  }
+]
