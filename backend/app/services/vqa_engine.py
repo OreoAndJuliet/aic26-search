@@ -17,6 +17,8 @@ from app.providers.vlm import VLMProvider, create_vlm_provider
 
 logger = logging.getLogger(__name__)
 
+from app.utils.vqa_answer import parse_vqa_answer
+
 # Standard instruction appended to questions when calling VLMs.
 VQA_INSTRUCTION = (
     "Answer concisely in 1 to 3 words. State only the direct answer. "
@@ -32,12 +34,7 @@ def build_vqa_prompt(question: str) -> str:
     return f"Question: {cleaned_question}\nInstruction: {VQA_INSTRUCTION}"
 
 
-def parse_vqa_answer(raw_answer: str) -> str:
-    """Clean the raw VLM response to extract a concise answer string."""
-    cleaned = raw_answer.strip().strip('"').strip("'")
-    first_line = cleaned.split("\n")[0].strip()
-    first_sentence = first_line.split(".")[0].strip()
-    return first_sentence if first_sentence else cleaned
+
 
 
 class VQAEngine:
@@ -134,7 +131,7 @@ class VQAEngine:
         keyframe_id = int(stem) if stem.isdigit() else 0
         return self._answer_image(
             image_path,
-            build_vqa_prompt(question),
+            question,
             video_id=video_id,
             keyframe_id=keyframe_id,
         )

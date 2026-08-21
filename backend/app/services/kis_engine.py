@@ -107,6 +107,20 @@ class KISEngine:
                 logger.exception("kis_engine initialization failed with unexpected error")
                 raise RetrievalUnavailableError(self._startup_error) from exc
 
+    def reload_index(self) -> None:
+        """Reload the vector store (FAISS index and metadata) from disk without dropping the text encoder."""
+        with self._load_lock:
+            try:
+                self._store = create_vector_store()
+                self._startup_error = None
+                self.warm_up()
+                logger.info("Successfully reloaded vector index and metadata.")
+            except (DatasetValidationError, RetrievalUnavailableError) as exc:
+                self._store = None
+                self._startup_error = str(exc)
+                logger.error("Failed to reload vector index: %s", exc)
+                raise RetrievalUnavailableError(self._startup_error) from exc
+
     def _ensure_text_encoder_loaded(self) -> None:
         if self._text_encoder is not None:
             return

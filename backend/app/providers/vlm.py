@@ -26,8 +26,14 @@ class VLMProvider(ABC):
 class MockVLMProvider(VLMProvider):
     def answer(self, image_path: Path, question: str) -> str:
         if not image_path.is_file():
-            return json.dumps({"answer": ""})
-        return json.dumps({"answer": f"mock:{question.strip()[:40]}"})
+            return ""
+        
+        # Extracted question from the prompt (e.g. "Question: how many cars are there?\nInstruction: ...")
+        q_text = question
+        if "Question:" in question:
+            q_text = question.split("Question:")[1].split("\n")[0].strip()
+            
+        return f"Mock answer for: {q_text}"
 
 
 class GeminiVLMProvider(VLMProvider):
@@ -172,7 +178,6 @@ class OpenAIVLMProvider(VLMProvider):
         payload = {
             "model": self._model_name,
             "temperature": 0.2,
-            "response_format": {"type": "json_object"},
             "messages": [
                 {
                     "role": "user",
@@ -357,7 +362,6 @@ class QwenVLMProvider(VLMProvider):
         payload = {
             "model": self._model_name,
             "temperature": 0.2,
-            "response_format": {"type": "json_object"},
             "messages": [
                 {
                     "role": "user",

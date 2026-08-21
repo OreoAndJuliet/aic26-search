@@ -21,20 +21,47 @@ function App() {
   const [cart, setCart] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [isRebuilding, setIsRebuilding] = useState(false);
+
+  const handleRebuildIndex = async () => {
+    if (!window.confirm("Are you sure you want to rebuild the FAISS index from .npy features? This may take some time depending on data size.")) return;
+    setIsRebuilding(true);
+    try {
+      const response = await fetch(`${API_BASE}/api/system/rebuild-index`, {
+        method: 'POST'
+      });
+      const data = await response.json();
+      if (data.status === 'success') {
+        alert(data.message);
+      } else {
+        alert("Failed to trigger index rebuild.");
+      }
+    } catch {
+      alert("Cannot connect to Backend. Make sure uvicorn is running on port 8000.");
+    } finally {
+      setIsRebuilding(false);
+    }
+  };
 
   const handleSearch = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     setIsLoading(true);
     try {
+      const payload: any = {
+        query_type: queryType,
+        text: textQuery,
+        question: questionQuery,
+        top_k: 100
+      };
+
+      if (queryType === 'TRAKE') {
+        payload.events = textQuery.split(',').map(s => s.trim()).filter(s => s);
+      }
+
       const response = await fetch(`${API_BASE}/api/v1/search`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query_type: queryType,
-          text: textQuery,
-          question: questionQuery,
-          top_k: 100
-        })
+        body: JSON.stringify(payload)
       });
       const data = await response.json();
       if (data.status === 'success') {
@@ -117,6 +144,15 @@ function App() {
         </form>
 
         <div className="header-stats">
+          <button 
+            type="button"
+            className="redo-vector-btn" 
+            onClick={handleRebuildIndex}
+            disabled={isRebuilding}
+            style={{ marginRight: '15px', padding: '6px 12px', background: '#e74c3c', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}
+          >
+            {isRebuilding ? 'Rebuilding...' : 'Redo Vector'}
+          </button>
           <div className="stat-pill">
             <div className="stat-dot"></div>
             <span>Results: </span>

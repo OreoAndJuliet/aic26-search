@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param (
     [Parameter(Mandatory = $false, Position = 0, HelpMessage = "Event/context text in Vietnamese or English")]
+    [Alias("vqa")]
     [string]$ContextText,
 
     [Parameter(Mandatory = $false, Position = 1, HelpMessage = "Question about the retrieved frame")]
