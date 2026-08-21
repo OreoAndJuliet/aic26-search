@@ -1,0 +1,226 @@
+[
+  {
+    "brand": "VinFast",
+    "aliases": ["VinFast Auto", "VF", "Vin Fast"],
+    "category": "Automotive / EV",
+    "models_or_products": ["VF3", "VF5", "VF6", "VF7", "VF8", "VF9", "Klara", "Feliz", "Evo 200", "Lux A2.0", "Lux SA2.0", "Fadil"],
+    "visual_colors": ["chữ V bạc", "silver V logo", "xe điện màu xanh lá", "xe xanh SM", "taxi xanh sm"],
+    "keywords": ["vinfast", "xe điện vinfast", "taxi xanh", "xanh sm"]
+  },
+  {
+    "brand": "Honda",
+    "aliases": ["Honda Vietnam", "Honda Motor"],
+    "category": "Automotive / Motorcycles",
+    "models_or_products": ["Wave Alpha", "Wave RSX", "Vision", "Lead", "Air Blade", "SH 125", "SH 150", "SH Mode", "Winner X", "Future", "Civic", "CR-V", "City", "HR-V"],
+    "visual_colors": ["chữ H cánh chim", "wing logo", "honda đỏ", "honda trắng"],
+    "keywords": ["honda", "xe máy honda", "honda vision", "honda wave", "honda sh", "honda lead"]
+  },
+  {
+    "brand": "Yamaha",
+    "aliases": ["Yamaha Motor Vietnam"],
+    "category": "Automotive / Motorcycles",
+    "models_or_products": ["Exciter 155", "Grande", "Janus", "NVX", "Sirius", "Jupiter"],
+    "visual_colors": ["logo 3 âm thoa", "tuning fork logo", "yamaha xanh dương"],
+    "keywords": ["yamaha", "exciter", "sirius", "grande", "janus"]
+  },
+  {
+    "brand": "Toyota",
+    "aliases": ["Toyota Vietnam"],
+    "category": "Automotive / Cars",
+    "models_or_products": ["Vios", "Innova", "Fortuner", "Corolla Cross", "Camry", "Veloz", "Yaris Cross", "Hilux", "Avanza"],
+    "visual_colors": ["logo 3 elip lồng nhau", "toyota silver oval logo"],
+    "keywords": ["toyota", "vios", "innova", "fortuner", "camry", "corolla cross"]
+  },
+  {
+    "brand": "Hyundai",
+    "aliases": ["Hyundai Thanh Cong"],
+    "category": "Automotive / Cars",
+    "models_or_products": ["Accent", "Grand i10", "Tucson", "Santa Fe", "Creta", "Custin", "Palisade", "Elantra"],
+    "visual_colors": ["chữ H nghiêng trong elip", "slanted H logo"],
+    "keywords": ["hyundai", "accent", "i10", "santafe", "tucson", "creta"]
+  },
+  {
+    "brand": "Mercedes-Benz",
+    "aliases": ["Mercedes", "Mec", "Mẹc"],
+    "category": "Automotive / Luxury",
+    "models_or_products": ["C-Class", "E-Class", "S-Class", "GLC 300", "GLC 200", "GLE", "G63 AMG", "Maybach"],
+    "visual_colors": ["ngôi sao 3 cánh", "three-pointed star logo"],
+    "keywords": ["mercedes", "ngôi sao ba cánh", "xe sang mẹc", "glc300"]
+  },
+  {
+    "brand": "BMW",
+    "aliases": ["Bayerische Motoren Werke"],
+    "category": "Automotive / Luxury",
+    "models_or_products": ["Series 3", "Series 5", "Series 7", "X3", "X5", "X7"],
+    "visual_colors": ["logo tròn xanh trắng cánh quạt", "lưới tản nhiệt quả thận kidney grille"],
+    "keywords": ["bmw", "xe bmv", "lưới tản nhiệt quả thận"]
+  },
+  {
+    "brand": "Starbucks",
+    "aliases": ["Starbucks Coffee"],
+    "category": "F&B / Coffee",
+    "models_or_products": ["Frappuccino", "Cold Brew", "Latte", "Matcha"],
+    "visual_colors": ["logo nàng tiên cá xanh lá", "green siren mermaid logo", "cốc starbucks"],
+    "keywords": ["starbucks", "cà phê starbucks", "nàng tiên cá xanh"]
+  },
+  {
+    "brand": "Highlands Coffee",
+    "aliases": ["Highlands", "Cà phê Highlands"],
+    "category": "F&B / Coffee",
+    "models_or_products": ["Phin Sữa Đá", "Freeze Trà Xanh", "Trà Sen Vàng", "Bánh Mì"],
+    "visual_colors": ["logo oval đỏ núi và dòng sông", "red oval highlands logo", "cốc đỏ"],
+    "keywords": ["highlands", "highlands coffee", "trà sen vàng", "phin sữa đá"]
+  },
+  {
+    "brand": "The Coffee House",
+    "aliases": ["TCH", "Nhà Cà Phê"],
+    "category": "F&B / Coffee",
+    "models_or_products": ["Trà Đào Cam Sả", "Cà Phê Sữa Đá", "Hi-Tea"],
+    "visual_colors": ["chữ THE COFFEE HOUSE cam đen", "orange black logo"],
+    "keywords": ["the coffee house", "trà đào cam sả", "nhà cà phê"]
+  },
+  {
+    "brand": "Phúc Long",
+    "aliases": ["Phuc Long Coffee & Tea", "Phúc Long Tea"],
+    "category": "F&B / Tea & Coffee",
+    "models_or_products": ["Trà Sữa Phúc Long", "Trà Vải", "Trà Đào", "Trà Ô Long"],
+    "visual_colors": ["màu xanh lá đậm", "dark green cup", "phuc long logo"],
+    "keywords": ["phúc long", "trà sữa phúc long", "trà phúc long"]
+  },
+  {
+    "brand": "KFC",
+    "aliases": ["Kentucky Fried Chicken", "Gà rán KFC"],
+    "category": "F&B / Fast Food",
+    "models_or_products": ["Gà rán giòn cay", "Burger Zinger", "Khoai tây chiên", "Kem"],
+    "visual_colors": ["đỏ trắng hình Đại tá Sanders", "Colonel Sanders logo", "hộp gà kfc"],
+    "keywords": ["kfc", "gà rán kfc", "ông già kfc"]
+  },
+  {
+    "brand": "Lotteria",
+    "aliases": ["Gà rán Lotteria"],
+    "category": "F&B / Fast Food",
+    "models_or_products": ["Gà rán sốt HS", "Burger Bulgogi", "Khoai tây lắc"],
+    "visual_colors": ["chữ L đỏ vàng", "red yellow Lotteria sign"],
+    "keywords": ["lotteria", "gà rán lotteria", "burger lotteria"]
+  },
+  {
+    "brand": "McDonald's",
+    "aliases": ["McDonalds", "MacDonald"],
+    "category": "F&B / Fast Food",
+    "models_or_products": ["Big Mac", "Khoai tây chiên French Fries", "McFlurry", "Gà rán"],
+    "visual_colors": ["vòm chữ M vàng nền đỏ", "golden arches M logo"],
+    "keywords": ["mcdonalds", "mcdonald", "chữ m vàng"]
+  },
+  {
+    "brand": "Circle K",
+    "aliases": ["Circle K 24/7", "Cửa hàng Circle K"],
+    "category": "Retail / Convenience Store",
+    "models_or_products": ["Froster", "Mì trộn", "Bánh bao", "Xúc xích"],
+    "visual_colors": ["chữ K trắng trong vòng tròn đỏ nền cam đỏ", "red circle K logo"],
+    "keywords": ["circle k", "cửa hàng tiện lợi circle k", "circle k 24h"]
+  },
+  {
+    "brand": "7-Eleven",
+    "aliases": ["7 Eleven", "Seven Eleven"],
+    "category": "Retail / Convenience Store",
+    "models_or_products": ["Slurpee", "Cơm nắm Onigiri", "Cà phê 7-Eleven"],
+    "visual_colors": ["số 7 xanh lá cam đỏ", "green orange red 7-eleven logo"],
+    "keywords": ["7-eleven", "seven eleven", "7 eleven"]
+  },
+  {
+    "brand": "WinMart",
+    "aliases": ["WinMart+", "VinMart", "VinMart+", "WinCommerce"],
+    "category": "Retail / Supermarket",
+    "models_or_products": ["Thực phẩm tươi sống", "Hàng tiêu dùng", "MEATDeli"],
+    "visual_colors": ["chữ WinMart đỏ vàng", "red yellow storefront"],
+    "keywords": ["winmart", "vinmart", "siêu thị winmart", "vinmart+"]
+  },
+  {
+    "brand": "Co.opmart",
+    "aliases": ["Coopmart", "Co.op Mart", "Saigon Co.op", "Co.op Food"],
+    "category": "Retail / Supermarket",
+    "models_or_products": ["Siêu thị bách hóa", "Thực phẩm"],
+    "visual_colors": ["chữ Co.opmart xanh dương đỏ", "blue red coopmart logo"],
+    "keywords": ["coopmart", "co.opmart", "siêu thị coopmart", "coop food"]
+  },
+  {
+    "brand": "Petrolimex",
+    "aliases": ["Tập đoàn Xăng dầu Việt Nam", "Cây xăng Petrolimex"],
+    "category": "Energy / Gas Station",
+    "models_or_products": ["Xăng RON 95", "Xăng E5 RON 92", "Dầu Diesel 0.05S"],
+    "visual_colors": ["chữ P màu xanh dương và cam", "cột bơm xăng petrolimex"],
+    "keywords": ["petrolimex", "cây xăng petrolimex", "trạm xăng petrolimex"]
+  },
+  {
+    "brand": "Techcombank",
+    "aliases": ["TCB", "Ngân hàng Kỹ thương"],
+    "category": "Banking / Finance",
+    "models_or_products": ["Cây ATM", "Phòng giao dịch", "Thẻ Techcombank"],
+    "visual_colors": ["2 hình vuông đỏ lồng nhau", "red double square logo"],
+    "keywords": ["techcombank", "atm techcombank", "ngân hàng techcombank"]
+  },
+  {
+    "brand": "Vietcombank",
+    "aliases": ["VCB", "Ngân hàng Ngoại thương"],
+    "category": "Banking / Finance",
+    "models_or_products": ["Cây ATM", "Thẻ Vietcombank"],
+    "visual_colors": ["chữ VCB xanh lá cây hình tam giác bo góc", "green triangular logo"],
+    "keywords": ["vietcombank", "atm vietcombank", "ngân hàng vietcombank"]
+  },
+  {
+    "brand": "Grab",
+    "aliases": ["GrabBike", "GrabCar", "GrabFood", "GrabExpress"],
+    "category": "Ride-Hailing / Delivery",
+    "models_or_products": ["Áo khoác xanh lá Grab", "Mũ bảo hiểm xanh lá Grab"],
+    "visual_colors": ["màu xanh lá cây", "green jacket and helmet", "chữ Grab trắng"],
+    "keywords": ["grab", "grabbike", "grabcar", "grabfood", "tài xế grab", "áo xanh grab"]
+  },
+  {
+    "brand": "ShopeeFood",
+    "aliases": ["Shopee", "Shopee Express", "Now.vn"],
+    "category": "E-Commerce / Delivery",
+    "models_or_products": ["Áo khoác cam ShopeeFood", "Mũ bảo hiểm cam"],
+    "visual_colors": ["màu cam rực rỡ", "orange jacket and helmet", "chữ ShopeeFood"],
+    "keywords": ["shopee", "shopeefood", "tài xế shopeefood", "áo cam shopee"]
+  },
+  {
+    "brand": "Gojek",
+    "aliases": ["Go-Viet", "GoJek Vietnam", "GoCar", "GoFood"],
+    "category": "Ride-Hailing / Delivery",
+    "models_or_products": ["Áo khoác đen xanh Gojek", "Mũ bảo hiểm xanh lá Gojek"],
+    "visual_colors": ["vòng tròn xanh lá chấm khuyết", "green circle dot logo"],
+    "keywords": ["gojek", "goviet", "tài xế gojek", "áo gojek"]
+  },
+  {
+    "brand": "Be",
+    "aliases": ["Be Group", "beBike", "beCar", "beFood"],
+    "category": "Ride-Hailing / Delivery",
+    "models_or_products": ["Áo khoác sọc vàng đen Be", "Mũ bảo hiểm vàng Be"],
+    "visual_colors": ["màu vàng sọc xanh đen", "yellow striped jacket", "chữ be vàng"],
+    "keywords": ["be", "bebike", "becar", "tài xế be", "áo vàng be"]
+  },
+  {
+    "brand": "Viettel",
+    "aliases": ["Tập đoàn Viettel", "Viettel Store", "Viettel Post"],
+    "category": "Telecom / Logistics",
+    "models_or_products": ["Cửa hàng Viettel", "Xe tải Viettel Post", "Sim 4G/5G"],
+    "visual_colors": ["màu đỏ trắng", "chữ viettel đỏ"],
+    "keywords": ["viettel", "viettel post", "viettel store", "xe viettel post"]
+  },
+  {
+    "brand": "FPT Shop",
+    "aliases": ["FPT", "FPT Telecom", "FPT Retail"],
+    "category": "Retail / Electronics",
+    "models_or_products": ["Điện thoại", "Laptop", "Cửa hàng FPT Shop"],
+    "visual_colors": ["logo 3 màu cam xanh dương xanh lá", "biển hiệu đen đỏ"],
+    "keywords": ["fpt", "fpt shop", "cửa hàng fpt"]
+  },
+  {
+    "brand": "Thế Giới Di Động",
+    "aliases": ["TGDD", "Thegioididong", "Điện Máy Xanh", "Bách Hóa Xanh"],
+    "category": "Retail / Electronics",
+    "models_or_products": ["Cửa hàng điện thoại", "Điện máy", "Bách hóa"],
+    "visual_colors": ["biển hiệu màu vàng chữ đen hình người chạy", "yellow black storefront TGDD"],
+    "keywords": ["thế giới di động", "tgdd", "điện máy xanh", "bách hóa xanh"]
+  }
+]

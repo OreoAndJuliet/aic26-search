@@ -1,0 +1,8 @@
+{
+  "status": "ok",
+  "milvus_uri": "tcp://localhost:19530",
+  "collection": "aic_keyframes",
+  "entity_count": 19222,
+  "dimension": 512,
+  "error": null
+}

@@ -1,0 +1,226 @@
+[
+  {
+    "code": "P.101",
+    "name_vi": "Đường cấm",
+    "name_en": "No Entry / Road Closed to All Vehicles",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ nền trắng", "red circle white background", "biển cấm đi vào"]
+  },
+  {
+    "code": "P.102",
+    "name_vi": "Cấm đi ngược chiều",
+    "name_en": "No Entry / One Way Street",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn đỏ vạch ngang trắng", "red circle with horizontal white bar", "cấm vào", "một chiều"]
+  },
+  {
+    "code": "P.103a",
+    "name_vi": "Cấm ô tô",
+    "name_en": "No Motor Vehicles / No Cars",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ hình ô tô", "red circle with car silhouette", "cấm xe hơi"]
+  },
+  {
+    "code": "P.104",
+    "name_vi": "Cấm xe máy",
+    "name_en": "No Motorcycles / No Motorbikes",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ hình xe máy", "red circle with motorcycle silhouette", "cấm mô tô"]
+  },
+  {
+    "code": "P.105",
+    "name_vi": "Cấm ô tô và xe máy",
+    "name_en": "No Cars and Motorcycles",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ hình ô tô và xe máy", "red circle with car and motorbike"]
+  },
+  {
+    "code": "P.106a",
+    "name_vi": "Cấm xe tải",
+    "name_en": "No Trucks / Heavy Goods Vehicles",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ hình xe tải", "red circle with truck silhouette", "cấm xe chở hàng"]
+  },
+  {
+    "code": "P.112",
+    "name_vi": "Cấm người đi bộ",
+    "name_en": "No Pedestrians",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ hình người đi bộ gạch chéo", "no pedestrian sign"]
+  },
+  {
+    "code": "P.123a",
+    "name_vi": "Cấm rẽ trái",
+    "name_en": "No Left Turn",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ mũi tên rẽ trái gạch chéo", "no left turn sign"]
+  },
+  {
+    "code": "P.123b",
+    "name_vi": "Cấm rẽ phải",
+    "name_en": "No Right Turn",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ mũi tên rẽ phải gạch chéo", "no right turn sign"]
+  },
+  {
+    "code": "P.124a",
+    "name_vi": "Cấm quay đầu xe",
+    "name_en": "No U-Turn",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ mũi tên chữ U gạch chéo", "no u turn sign"]
+  },
+  {
+    "code": "P.127",
+    "name_vi": "Tốc độ tối đa cho phép",
+    "name_en": "Maximum Speed Limit",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ có số 40 50 60 80 100", "speed limit sign", "hạn chế tốc độ"]
+  },
+  {
+    "code": "P.130",
+    "name_vi": "Cấm dừng xe và đỗ xe",
+    "name_en": "No Stopping and No Parking",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ nền xanh chữ X đỏ", "red X on blue circle", "cấm dừng cấm đỗ"]
+  },
+  {
+    "code": "P.131a",
+    "name_vi": "Cấm đỗ xe",
+    "name_en": "No Parking",
+    "category": "Regulatory / Biển cấm",
+    "visual_cues": ["tròn viền đỏ nền xanh gạch chéo đỏ", "single red slash on blue circle", "cấm đỗ"]
+  },
+  {
+    "code": "W.201a",
+    "name_vi": "Chỗ ngoặt nguy hiểm vòng bên trái",
+    "name_en": "Dangerous Curve to the Left",
+    "category": "Warning / Biển cảnh báo",
+    "visual_cues": ["tam giác vàng viền đỏ mũi tên cong trái", "yellow triangle dangerous curve"]
+  },
+  {
+    "code": "W.205a",
+    "name_vi": "Đường giao nhau cùng mức (Ngã tư)",
+    "name_en": "Crossroads / Intersection Warning",
+    "category": "Warning / Biển cảnh báo",
+    "visual_cues": ["tam giác vàng viền đỏ hình dấu cộng đen", "intersection warning sign", "ngã tư"]
+  },
+  {
+    "code": "W.207a",
+    "name_vi": "Giao nhau với đường không ưu tiên (Ngã ba)",
+    "name_en": "Side Road Junction / T-Junction",
+    "category": "Warning / Biển cảnh báo",
+    "visual_cues": ["tam giác vàng viền đỏ hình ngã ba", "side road junction sign", "ngã ba"]
+  },
+  {
+    "code": "W.208",
+    "name_vi": "Giao nhau với đường ưu tiên (Giao lộ)",
+    "name_en": "Yield / Give Way Warning",
+    "category": "Warning / Biển cảnh báo",
+    "visual_cues": ["tam giác ngược vàng viền đỏ", "inverted yellow triangle yield sign"]
+  },
+  {
+    "code": "W.209",
+    "name_vi": "Giao nhau có tín hiệu đèn giao thông",
+    "name_en": "Traffic Light Ahead",
+    "category": "Warning / Biển cảnh báo",
+    "visual_cues": ["tam giác vàng viền đỏ hình đèn tín hiệu xanh vàng đỏ", "traffic lights signal sign"]
+  },
+  {
+    "code": "W.210",
+    "name_vi": "Giao nhau với đường sắt có rào chắn",
+    "name_en": "Level Crossing with Gate Ahead",
+    "category": "Warning / Biển cảnh báo",
+    "visual_cues": ["tam giác vàng viền đỏ hình hàng rào", "railway gate crossing sign"]
+  },
+  {
+    "code": "W.224",
+    "name_vi": "Đường người đi bộ cắt ngang",
+    "name_en": "Pedestrian Crossing Ahead",
+    "category": "Warning / Biển cảnh báo",
+    "visual_cues": ["tam giác vàng viền đỏ hình người đi trên vạch kẻ", "pedestrian crossing warning"]
+  },
+  {
+    "code": "W.225",
+    "name_vi": "Trẻ em qua đường (Gần trường học)",
+    "name_en": "Children Crossing / School Zone",
+    "category": "Warning / Biển cảnh báo",
+    "visual_cues": ["tam giác vàng viền đỏ hình 2 đứa trẻ dắt tay nhau", "school zone children sign"]
+  },
+  {
+    "code": "W.227",
+    "name_vi": "Công trường đang thi công",
+    "name_en": "Road Work Ahead / Construction Zone",
+    "category": "Warning / Biển cảnh báo",
+    "visual_cues": ["tam giác vàng viền đỏ hình người xúc đất", "roadwork construction sign"]
+  },
+  {
+    "code": "R.301a",
+    "name_vi": "Hướng đi phải theo (Đi thẳng)",
+    "name_en": "Mandatory Direction (Straight Only)",
+    "category": "Mandatory / Biển hiệu lệnh",
+    "visual_cues": ["tròn xanh dương mũi tên trắng thẳng", "blue circle straight arrow"]
+  },
+  {
+    "code": "R.302a",
+    "name_vi": "Hướng phải đi vòng chướng ngại vật (Vòng xuyến)",
+    "name_en": "Roundabout / Keep Right",
+    "category": "Mandatory / Biển hiệu lệnh",
+    "visual_cues": ["tròn xanh dương mũi tên xoay tròn", "blue circle roundabout arrows", "vòng xuyến"]
+  },
+  {
+    "code": "R.303",
+    "name_vi": "Nơi giao nhau chạy theo vòng xuyến",
+    "name_en": "Roundabout Mandatory",
+    "category": "Mandatory / Biển hiệu lệnh",
+    "visual_cues": ["tròn xanh 3 mũi tên vòng tròn", "roundabout sign"]
+  },
+  {
+    "code": "I.401",
+    "name_vi": "Bắt đầu đường ưu tiên",
+    "name_en": "Priority Road Begins",
+    "category": "Information / Biển chỉ dẫn",
+    "visual_cues": ["hình thoi viền trắng trong vàng", "yellow diamond priority road sign"]
+  },
+  {
+    "code": "I.407a",
+    "name_vi": "Đường một chiều",
+    "name_en": "One Way Traffic",
+    "category": "Information / Biển chỉ dẫn",
+    "visual_cues": ["chữ nhật xanh dương mũi tên trắng to thẳng đứng", "one way street blue rectangle"]
+  },
+  {
+    "code": "I.408",
+    "name_vi": "Nơi đỗ xe (Bãi giữ xe)",
+    "name_en": "Parking Place / Parking Lot",
+    "category": "Information / Biển chỉ dẫn",
+    "visual_cues": ["chữ nhật vuông xanh dương chữ P trắng", "blue square white letter P parking sign"]
+  },
+  {
+    "code": "I.423a",
+    "name_vi": "Vị trí người đi bộ sang đường (Vạch ngựa vằn)",
+    "name_en": "Pedestrian Crossing Location",
+    "category": "Information / Biển chỉ dẫn",
+    "visual_cues": ["vuông xanh dương tam giác trắng hình người qua đường", "zebra crossing blue square sign"]
+  },
+  {
+    "code": "I.434a",
+    "name_vi": "Trạm dừng xe buýt",
+    "name_en": "Bus Stop",
+    "category": "Information / Biển chỉ dẫn",
+    "visual_cues": ["chữ nhật xanh hình xe buýt màu vàng hoặc đen", "bus stop sign", "trạm xe buýt"]
+  },
+  {
+    "code": "I.443",
+    "name_vi": "Trạm xăng dầu",
+    "name_en": "Gas Station / Petrol Station",
+    "category": "Information / Biển chỉ dẫn",
+    "visual_cues": ["chữ nhật xanh hình cây xăng", "petrol gas station sign"]
+  },
+  {
+    "code": "I.444",
+    "name_vi": "Cầu vượt bộ hành qua đường",
+    "name_en": "Pedestrian Overpass",
+    "category": "Information / Biển chỉ dẫn",
+    "visual_cues": ["chữ nhật xanh hình người đi trên cầu vượt", "footbridge overpass sign"]
+  }
+]

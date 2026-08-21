@@ -1,0 +1,96 @@
+[
+  {
+    "type_name": "Xe máy / Mô tô",
+    "name_en": "Motorcycle / Motorbike / Scooter",
+    "subtypes": [
+      {"name": "Xe tay ga", "name_en": "Scooter", "examples": ["Honda Vision", "Honda Lead", "Honda Air Blade", "Honda SH", "Yamaha Grande", "Vespa"]},
+      {"name": "Xe số", "name_en": "Semi-Automatic Underbone", "examples": ["Honda Wave Alpha", "Honda RSX", "Honda Future", "Yamaha Sirius", "Yamaha Jupiter"]},
+      {"name": "Xe côn tay / Phân khối lớn", "name_en": "Manual Clutch / Big Bike", "examples": ["Yamaha Exciter", "Honda Winner X", "Kawasaki Ninja", "Ducati"]},
+      {"name": "Xe máy điện", "name_en": "Electric Scooter", "examples": ["VinFast Klara", "VinFast Feliz", "VinFast Evo 200", "Pega", "Yadea"]}
+    ],
+    "keywords": ["xe máy", "mô tô", "xe tay ga", "xe số", "xe ga", "scooter", "motorbike", "motorcycle", "hai bánh", "đội mũ bảo hiểm"]
+  },
+  {
+    "type_name": "Xe đạp",
+    "name_en": "Bicycle / Bike",
+    "subtypes": [
+      {"name": "Xe đạp thành phố", "name_en": "City Bike", "examples": ["Asama", "Thống Nhất", "Giant"]},
+      {"name": "Xe đạp điện", "name_en": "Electric Bicycle / E-Bike", "examples": ["Asama E-Bike", "Nijia"]},
+      {"name": "Xe đạp thể thao / Địa hình", "name_en": "Mountain Bike / Road Bike", "examples": ["Trek", "Giant", "Specialized"]}
+    ],
+    "keywords": ["xe đạp", "xe đạp điện", "bicycle", "bike", "cyclist", "người đi xe đạp", "đạp xe"]
+  },
+  {
+    "type_name": "Xe ô tô con",
+    "name_en": "Sedan / Hatchback / SUV / Passenger Car",
+    "subtypes": [
+      {"name": "Xe Sedan (4-5 chỗ)", "name_en": "Sedan", "examples": ["Toyota Vios", "Hyundai Accent", "Honda City", "Mazda 3", "Toyota Camry"]},
+      {"name": "Xe SUV / Crossover (5-7 chỗ)", "name_en": "SUV / Crossover", "examples": ["Toyota Fortuner", "Hyundai Santa Fe", "Mazda CX-5", "Ford Everest", "VinFast VF8"]},
+      {"name": "Xe Hatchback (Đô thị cỡ nhỏ)", "name_en": "Hatchback", "examples": ["Hyundai Grand i10", "Kia Morning", "VinFast Fadil", "Toyota Wigo"]},
+      {"name": "Xe MPV (Gia đình 7 chỗ)", "name_en": "MPV", "examples": ["Mitsubishi Xpander", "Toyota Innova", "Toyota Veloz Cross", "Kia Carnival"]}
+    ],
+    "keywords": ["ô tô", "xe hơi", "xe con", "sedan", "suv", "hatchback", "car", "passenger car", "4 chỗ", "7 chỗ"]
+  },
+  {
+    "type_name": "Xe Taxi & Dịch vụ công nghệ",
+    "name_en": "Taxi / Ride-Hailing Car",
+    "subtypes": [
+      {"name": "Taxi Xanh SM", "name_en": "Xanh SM Electric Taxi", "examples": ["VinFast VF e34", "VinFast VF8", "VF5 Plus (màu xanh cyan)"]},
+      {"name": "Taxi Vinasun", "name_en": "Vinasun Taxi", "examples": ["Toyota Innova Vinasun (màu trắng sọc đỏ xanh)", "Toyota Vios Vinasun"]},
+      {"name": "Taxi Mai Linh", "name_en": "Mai Linh Taxi", "examples": ["Toyota Vios Mai Linh (màu xanh lá cây)", "Hyundai i10 Mai Linh"]},
+      {"name": "Xe GrabCar / beCar", "name_en": "GrabCar / beCar", "examples": ["Ô tô dán logo Grab / Be trên kính lái"]}
+    ],
+    "keywords": ["taxi", "taxi xanh sm", "vinasun", "mai linh", "grabcar", "becar", "xe taxi", "đèn mào taxi"]
+  },
+  {
+    "type_name": "Xe buýt",
+    "name_en": "Public City Bus",
+    "subtypes": [
+      {"name": "Xe buýt truyền thống", "name_en": "City Bus (Green/Yellow/Blue)", "examples": ["Bus 150", "Bus 08", "Bus 19", "Bus 54", "Bus 56", "Bus 93", "Samco Bus", "Thaco Bus"]},
+      {"name": "Xe buýt điện VinBus", "name_en": "VinBus Electric Bus", "examples": ["VinBus màu xanh lá cây đen chữ VinBus LED"]}
+    ],
+    "keywords": ["xe buýt", "xe bus", "bus 150", "bus 08", "vinbus", "trạm xe buýt", "xe buýt xanh", "public transit"]
+  },
+  {
+    "type_name": "Xe tải & Xe chuyên dụng",
+    "name_en": "Truck / Heavy Vehicle / Van",
+    "subtypes": [
+      {"name": "Xe tải nhẹ / Xe bán tải", "name_en": "Light Truck / Pickup Truck", "examples": ["Ford Ranger", "Toyota Hilux", "Isuzu D-Max", "Suzuki Carry", "Thaco Towner"]},
+      {"name": "Xe tải thùng / Xe tải nặng", "name_en": "Medium / Heavy Truck", "examples": ["Hino", "Isuzu", "Hyundai HD", "Dongfeng"]},
+      {"name": "Xe đầu kéo container", "name_en": "Semi-Trailer / Container Truck", "examples": ["Đầu kéo Mỹ International", "Freightliner", "Howo"]},
+      {"name": "Xe bồn / Xe chở xăng dầu / Xe trộn bê tông", "name_en": "Tanker Truck / Concrete Mixer", "examples": ["Xe bồn Petrolimex", "Xe bồn nước", "Xe trộn bê tông"]},
+      {"name": "Xe rác / Xe vệ sinh môi trường", "name_en": "Garbage Truck / Street Sweeper", "examples": ["Xe chở rác màu xanh lá"]}
+    ],
+    "keywords": ["xe tải", "xe bán tải", "pickup", "container", "xe đầu kéo", "xe bồn", "xe rác", "truck", "van"]
+  },
+  {
+    "type_name": "Xe cứu thương, Cảnh sát & Cứu hỏa",
+    "name_en": "Emergency & Service Vehicles",
+    "subtypes": [
+      {"name": "Xe cứu thương", "name_en": "Ambulance", "examples": ["Hyundai Starex cứu thương (chữ thập đỏ, đèn ưu tiên xanh đỏ, còi 115)"]},
+      {"name": "Xe cảnh sát giao thông / Công an", "name_en": "Police Car / Patrol Motorcycle", "examples": ["Xe ô tô CSGT màu trắng chữ CẢNH SÁT GIAO THÔNG", "Mô tô đặc chủng CSGT Honda CB300/CB250"]},
+      {"name": "Xe cứu hỏa", "name_en": "Fire Truck", "examples": ["Xe chữa cháy màu đỏ có thang và vòi rồng"]}
+    ],
+    "keywords": ["xe cứu thương", "ambulance", "cảnh sát", "police", "csgt", "cứu hỏa", "fire truck", "đèn ưu tiên", "chữ thập đỏ"]
+  },
+  {
+    "type_name": "Phương tiện truyền thống & Du lịch",
+    "name_en": "Traditional & Tourist Transport",
+    "subtypes": [
+      {"name": "Xe xích lô", "name_en": "Cyclo / Rickshaw", "examples": ["Xích lô chở khách du lịch ở phố cổ Hà Nội, Quận 1 TP.HCM, Huế"]},
+      {"name": "Xe ba gác / Xe lôi", "name_en": "Three-wheeled Cart / Motorized Rickshaw", "examples": ["Xe ba gác máy chở hàng"]},
+      {"name": "Xe điện du lịch", "name_en": "Electric Sightseeing Buggy", "examples": ["Xe điện chở khách tham quan quanh bờ hồ Hoàn Kiếm, phố cổ"]}
+    ],
+    "keywords": ["xích lô", "cyclo", "xe ba gác", "xe lôi", "xe điện du lịch", "ba bánh"]
+  },
+  {
+    "type_name": "Phương tiện đường thủy",
+    "name_en": "Watercraft / Boat / Ship / Ferry",
+    "subtypes": [
+      {"name": "Tàu buýt đường sông (Saigon Waterbus)", "name_en": "Saigon Waterbus", "examples": ["Waterbus màu vàng trắng chạy trên sông Sài Gòn"]},
+      {"name": "Thuyền ghe / Xuồng ba lá", "name_en": "Wooden Boat / Sampan", "examples": ["Ghe chở trái cây chợ nổi Cái Răng", "Thuyền chèo Tràng An Tam Cốc"]},
+      {"name": "Phà qua sông", "name_en": "Ferry", "examples": ["Phà Cát Lái", "Phà Bình Khánh"]}
+    ],
+    "keywords": ["thuyền", "ghe", "cano", "saigon waterbus", "tàu thủy", "phà", "boat", "ferry", "sampan"]
+  }
+]

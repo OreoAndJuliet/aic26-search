@@ -1,63 +1,109 @@
-from fastapi import FastAPI
+import os
+os.environ.setdefault("OPENBLAS_NUM_THREADS", "1")
+os.environ.setdefault("OMP_NUM_THREADS", "1")
+os.environ.setdefault("MKL_NUM_THREADS", "1")
+
+from contextlib import asynccontextmanager
+
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import List, Optional
+from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
-app = FastAPI(title="AIC 2026 - Video Retrieval API")
+from app.bootstrap import initialize_engines
+from app.core.config import settings
+from app.core.exceptions import BackendError
+from app.core.logging import configure_logging
+from app.routers import export, health, media, search
 
-# Cấu hình CORS để Frontend (thường chạy cổng 5173) có thể gọi API
+configure_logging(settings.LOG_LEVEL)
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    """Load and validate the shared KIS resources before serving requests.
+
+    When running in-test (AIC_TESTING=1) we skip heavy initialization so TestClient
+    can control/mock engine state deterministically.
+    """
+    import os
+
+    if os.getenv("AIC_TESTING"):
+        # Tests will monkeypatch or pre-initialize kis_engine as needed
+        yield
+        return
+
+    initialize_engines()
+    yield
+
+app = FastAPI(
+    title="AIC 2026 Backend System",
+    version="1.0.0",
+    lifespan=lifespan,
+)
+
+
+@app.exception_handler(BackendError)
+async def backend_error_handler(_: Request, exc: BackendError) -> JSONResponse:
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"error": {"code": exc.code, "message": exc.message}},
+    )
+
+
+from fastapi.encoders import jsonable_encoder
+
+@app.exception_handler(RequestValidationError)
+async def validation_error_handler(_: Request, exc: RequestValidationError) -> JSONResponse:
+    return JSONResponse(
+        status_code=422,
+        content={
+            "error": {
+                "code": "VALIDATION_ERROR",
+                "message": "Request validation failed.",
+                "details": jsonable_encoder(exc.errors()),
+            }
+        },
+    )
+
+# 1. Cấu hình CORS mở cho React/Vite Frontend (hỗ trợ mọi port localhost/127.0.0.1)
+cors_origins = [origin.strip() for origin in settings.CORS_ORIGINS.split(",") if origin.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Trong môi trường dev có thể để *, production nên giới hạn
+    allow_origins=cors_origins or ["*"],
+    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# --- Models ---
-class SearchRequest(BaseModel):
-    query_type: str  # "KIS", "VQA", "TRAKE"
-    text: str
-    question: Optional[str] = None
-    top_k: int = 50
+# 2. Keyframe resolver must be registered before the static mount.
+app.include_router(media.router)
 
-class SearchResult(BaseModel):
-    video_id: str
-    frame_id: int
-    score: float
-    thumbnail_url: str
-    answer: Optional[str] = None
+# 3. Serve keyframes at the specification-required path: /keyframes/
+# Ensure required directories exist before mounting
+settings.KEYFRAMES_DIR.mkdir(parents=True, exist_ok=True)
+settings.STATIC_DIR.mkdir(parents=True, exist_ok=True)
+settings.SUBMISSION_DIR.mkdir(parents=True, exist_ok=True)
 
-class SearchResponse(BaseModel):
-    status: str
-    data: List[SearchResult]
+keyframes_path = str(settings.KEYFRAMES_DIR)
+app.mount("/keyframes", StaticFiles(directory=keyframes_path), name="keyframes")
 
-# --- Endpoints ---
+# 4. Serve static files at legacy path for backward compatibility
+app.mount("/static", StaticFiles(directory=str(settings.STATIC_DIR)), name="static")
+app.mount(
+    "/submission",
+    StaticFiles(directory=str(settings.SUBMISSION_DIR)),
+    name="submission",
+)
+# 5. Đăng ký API Routers
+# Register search router with /api prefix (creates /api/search and /api/search_trake and /api/v1/search)
+app.include_router(search.router, prefix="/api")
+app.include_router(export.router, prefix="/api")
+app.include_router(health.router)  # Health check at root level for backward compatibility
+
 @app.get("/")
-def read_root():
-    return {"message": "Welcome to AIC 2026 API Server. Access /docs for Swagger UI."}
-
-@app.post("/api/v1/search", response_model=SearchResponse)
-def search(request: SearchRequest):
-    """
-    API tìm kiếm chính (Mockup Data).
-    Thực tế ở Giai đoạn 1, Backend sẽ cần gọi mô hình CLIP ở đây.
-    """
-    # Mock data để Frontend test giao diện trước
-    mock_results = []
-    for i in range(1, 21):
-        mock_results.append(
-            SearchResult(
-                video_id=f"L01_V0{i:02d}",
-                frame_id=1000 + i * 50,
-                score=0.99 - (i * 0.01),
-                thumbnail_url=f"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo_HCMUT.png/640px-Logo_HCMUT.png", # Logo Bách Khoa tạm thời
-                answer="Đáp án mẫu" if request.query_type == "VQA" else None
-            )
-        )
-    
-    return SearchResponse(status="success", data=mock_results)
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+def root():
+    return {"status": "online", "system": "AIC 2026 Backend Engine"}

@@ -1,3 +1,4 @@
+# Dependencies & Environments
 node_modules/
 __pycache__/
 *.pyc
@@ -7,3 +8,27 @@ venv/
 dist/
 build/
 .DS_Store
+.pytest_cache/
+*.log
+
+# Heavy Dataset & Binary Assets (Keep code, exclude large data)
+backend/data/inbox/
+backend/data/features/
+backend/data/map_keyframes/
+backend/data/media_info/
+backend/data/objects/
+backend/data/faiss_index.bin
+backend/data/metadata.json
+backend/static/keyframes/
+backend/static/videos/
+backend/submission/
+data/inbox/
+data/features/
+data/map_keyframes/
+data/media_info/
+data/objects/
+data/faiss_index.bin
+data/metadata.json
+static/keyframes/
+static/videos/
+submission/

@@ -1,0 +1,157 @@
+{
+  "benchmark_name": "AIC 2026 Competition Benchmark",
+  "version": "1.0",
+  "queries": [
+    {
+      "query_id": "Q_001",
+      "task_type": "KIS",
+      "query": "xe buýt số 150 trên đường phố",
+      "expected_video_id": "L21_V001",
+      "expected_frame_id": 100,
+      "expected_timestamp": 10.0,
+      "acceptable_video_ids": [
+        "L21_V001"
+      ]
+    },
+    {
+      "query_id": "Q_002",
+      "task_type": "KIS",
+      "query": "cửa hàng Circle K có biển hiệu màu đỏ",
+      "expected_video_id": "L21_V002",
+      "expected_frame_id": 250,
+      "expected_timestamp": 15.0,
+      "acceptable_video_ids": [
+        "L21_V002"
+      ]
+    },
+    {
+      "query_id": "Q_003",
+      "task_type": "KIS",
+      "query": "người đi xe máy dừng đèn đỏ",
+      "expected_video_id": "L21_V003",
+      "expected_frame_id": 300,
+      "expected_timestamp": 20.0,
+      "acceptable_video_ids": [
+        "L21_V003"
+      ]
+    },
+    {
+      "query_id": "Q_004",
+      "task_type": "KIS",
+      "query": "quán cà phê Highlands Coffee",
+      "expected_video_id": "L21_V004",
+      "expected_frame_id": 400,
+      "expected_timestamp": 30.0,
+      "acceptable_video_ids": [
+        "L21_V004"
+      ]
+    },
+    {
+      "query_id": "Q_005",
+      "task_type": "KIS",
+      "query": "cây xăng Petrolimex",
+      "expected_video_id": "L21_V005",
+      "expected_frame_id": 500,
+      "expected_timestamp": 45.0,
+      "acceptable_video_ids": [
+        "L21_V005"
+      ]
+    },
+    {
+      "query_id": "Q_006",
+      "task_type": "KIS",
+      "query": "người phụ nữ mặc áo dài đi bộ",
+      "expected_video_id": "L21_V006",
+      "expected_frame_id": 120,
+      "expected_timestamp": 8.0,
+      "acceptable_video_ids": [
+        "L21_V006"
+      ]
+    },
+    {
+      "query_id": "Q_007",
+      "task_type": "KIS",
+      "query": "cầu Rồng phun lửa Đà Nẵng",
+      "expected_video_id": "L21_V007",
+      "expected_frame_id": 600,
+      "expected_timestamp": 60.0,
+      "acceptable_video_ids": [
+        "L21_V007"
+      ]
+    },
+    {
+      "query_id": "Q_008",
+      "task_type": "KIS",
+      "query": "xe cứu thương bật đèn ưu tiên",
+      "expected_video_id": "L21_V008",
+      "expected_frame_id": 350,
+      "expected_timestamp": 25.0,
+      "acceptable_video_ids": [
+        "L21_V008"
+      ]
+    },
+    {
+      "query_id": "Q_009",
+      "task_type": "KIS",
+      "query": "học sinh qua đường tại vạch kẻ",
+      "expected_video_id": "L21_V009",
+      "expected_frame_id": 200,
+      "expected_timestamp": 18.0,
+      "acceptable_video_ids": [
+        "L21_V009"
+      ]
+    },
+    {
+      "query_id": "Q_010",
+      "task_type": "KIS",
+      "query": "chợ Bến Thành nhìn từ trên cao",
+      "expected_video_id": "L21_V010",
+      "expected_frame_id": 150,
+      "expected_timestamp": 12.0,
+      "acceptable_video_ids": [
+        "L21_V010"
+      ]
+    },
+    {
+      "query_id": "Q_011",
+      "task_type": "VQA",
+      "query": "cửa hàng tiện lợi Circle K",
+      "question": "Biển hiệu có màu gì chủ đạo?",
+      "expected_answer": "màu đỏ",
+      "acceptable_answers": [
+        "đỏ",
+        "màu đỏ",
+        "red"
+      ],
+      "expected_video_id": "L21_V002",
+      "expected_frame_id": 250,
+      "expected_timestamp": 15.0
+    },
+    {
+      "query_id": "Q_012",
+      "task_type": "VQA",
+      "query": "xe buýt đang đón trả khách",
+      "question": "Tuyến xe buýt mang số bao nhiêu?",
+      "expected_answer": "150",
+      "acceptable_answers": [
+        "150",
+        "tuyến 150",
+        "số 150"
+      ],
+      "expected_video_id": "L21_V001",
+      "expected_frame_id": 100,
+      "expected_timestamp": 10.0
+    },
+    {
+      "query_id": "Q_013",
+      "task_type": "TRAKE",
+      "query": "chuỗi sự kiện nấu ăn",
+      "events": [
+        "chuẩn bị nguyên liệu trên thớt",
+        "bật bếp và cho dầu ăn vào chảo",
+        "múc thức ăn ra đĩa hoàn thiện"
+      ],
+      "expected_video_id": "L21_V003"
+    }
+  ]
+}

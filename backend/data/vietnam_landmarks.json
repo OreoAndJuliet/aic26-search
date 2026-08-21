@@ -1,0 +1,22 @@
+[
+  {
+    "id": "VN_HCM_001",
+    "name": "Chợ Bến Thành",
+    "canonical_en": "Ben Thanh Market",
+    "aliases": ["Ben Thanh Market", "Cho Ben Thanh", "Chợ Bến Thành"],
+    "city": "Hồ Chí Minh",
+    "district": "Quận 1",
+    "category": "Market / Historic",
+    "keywords": ["chợ bến thành", "bến thành", "chợ", "tấp nập", "người qua lại", "bến thành market"]
+  },
+  {
+    "id": "VN_HCM_002",
+    "name": "Landmark 81",
+    "canonical_en": "Landmark 81",
+    "aliases": ["Landmark 81", "Vincom Landmark 81", "tòa nhà Landmark 81", "Landmark"],
+    "city": "Hồ Chí Minh",
+    "district": "Bình Thạnh",
+    "category": "Skyscraper",
+    "keywords": ["landmark 81", "cao nhất việt nam", "tòa nhà", "vinhome", "landmark"]
+  }
+]
