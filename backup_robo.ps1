@@ -74,9 +74,6 @@ try {
     if (-not $IncludeStatic) {
         $excludeDirs += (Join-Path $Source "backend\static")
     }
-    if (-not $IncludeFeatures) {
-        $excludeDirs += (Join-Path $Source "backend\data\features")
-    }
     if (-not $IncludeObjects) {
         $excludeDirs += (Join-Path $Source "backend\data\objects")
     }
