@@ -15,7 +15,7 @@ from app.bootstrap import initialize_engines
 from app.core.config import settings
 from app.core.exceptions import BackendError
 from app.core.logging import configure_logging
-from app.routers import export, health, media, search, system
+from app.routers import export, health, media, search, system, preview
 
 configure_logging(settings.LOG_LEVEL)
 
@@ -107,6 +107,7 @@ app.mount(
 app.include_router(search.router, prefix="/api")
 app.include_router(export.router, prefix="/api")
 app.include_router(system.router, prefix="/api/system")
+app.include_router(preview.router, prefix="/api")
 app.include_router(health.router)  # Health check at root level for backward compatibility
 
 @app.get("/")

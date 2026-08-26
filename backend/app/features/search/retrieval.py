@@ -192,6 +192,7 @@ def run_kis_retrieval(
         logger.debug("spatial_roi_pooling_failed: %s", exc)
 
     # Negative Constraint Penalty — run on BOTH Vietnamese (raw) and English (translated)
+    has_neg = False
     try:
         from app.algorithms.negative_projection import extract_negative_constraint
         # Try Vietnamese raw query first (more reliable patterns), fallback to English

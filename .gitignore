@@ -32,3 +32,8 @@ data/metadata.json
 static/keyframes/
 static/videos/
 submission/
+scratch/
+*.npy
+*.zip
+backend/data/videos/
+data/videos/

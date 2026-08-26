@@ -61,6 +61,7 @@ class SentenceTransformerClipTextEncoder(TextEncoder):
         import os
         import sys
         old_stderr = sys.stderr
+        text = " ".join(text.split()[:30])
         with open(os.devnull, "w") as devnull:
             sys.stderr = devnull
             try:
@@ -83,6 +84,7 @@ class SentenceTransformerClipTextEncoder(TextEncoder):
         import os
         import sys
         old_stderr = sys.stderr
+        texts = [" ".join(t.split()[:30]) for t in texts]
         with open(os.devnull, "w") as devnull:
             sys.stderr = devnull
             try:

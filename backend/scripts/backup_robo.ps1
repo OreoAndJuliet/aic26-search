@@ -74,9 +74,10 @@ try {
     if (-not $IncludeStatic) {
         $excludeDirs += "static"
     }
-    if (-not $IncludeFeatures) {
-        $excludeDirs += "features"
-    }
+    # Features are now always included intact by default
+    # if (-not $IncludeFeatures) {
+    #     $excludeDirs += "features"
+    # }
     if (-not $IncludeObjects) {
         $excludeDirs += "objects"
     }
