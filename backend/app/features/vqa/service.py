@@ -289,5 +289,18 @@ def answer_vqa_question(
         c["alternative_answers"] = [alt.to_dict() for alt in ranked_alternatives]
         processed_results.append(c)
 
+    # Re-rank based on VQA answer
+    def _rank_score(c: dict) -> tuple[int, float]:
+        ans = str(c.get("answer", "")).strip().lower()
+        if ans in ("yes", "yes.", "có", "có."):
+            return 3, float(c.get("score", 0.0))
+        if "yes" in ans or "có" in ans:
+            return 2, float(c.get("score", 0.0))
+        if is_count and ans.isdigit() and int(ans) > 0:
+            return 1, float(ans)
+        return 0, float(c.get("score", 0.0))
+
+    processed_results.sort(key=_rank_score, reverse=True)
+
     elapsed_ms = round((time.perf_counter() - started_at) * 1000, 2)
     return processed_results, elapsed_ms

@@ -89,19 +89,6 @@ class TRAKEEngine:
                         gap = path[i].timestamp - path[i-1].timestamp
                         temporal_gaps.append(round(gap, 2))
 
-                    results: list[dict[str, Any]] = []
-                    for rank, candidate in enumerate(path, start=1):
-                        item = dict(candidate.payload)
-                        item.update(
-                            {
-                                "rank": rank,
-                                "event_index": candidate.event_index,
-                                "event_text": candidate.event_text,
-                                "answer": None,
-                            }
-                        )
-                        results.append(item)
-
                     # Extract top-k candidate trajectories for full submission ranking
                     top_paths = align_topk_events_dtw(
                         event_layers,
@@ -110,6 +97,26 @@ class TRAKEEngine:
                         target_gap_seconds=settings.TRAKE_TARGET_GAP_SECONDS,
                         gap_sigma_seconds=settings.TRAKE_GAP_SIGMA_SECONDS,
                     )
+                    
+                    results: list[dict[str, Any]] = []
+                    seen_videos = set()
+                    for p, score in top_paths:
+                        if not p or p[0].video_id in seen_videos: continue
+                        seen_videos.add(p[0].video_id)
+                        for candidate in p:
+                            item = dict(candidate.payload)
+                            item.update(
+                                {
+                                    "rank": len(results) + 1,
+                                    "event_index": candidate.event_index,
+                                    "event_text": candidate.event_text,
+                                    "answer": None,
+                                }
+                            )
+                            results.append(item)
+                        if len(results) >= 100:
+                            break
+
                     candidate_trajectories = [
                         [p[0].video_id, *[c.frame_id for c in p]]
                         for p, _ in top_paths

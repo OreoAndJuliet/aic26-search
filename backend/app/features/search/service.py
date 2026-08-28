@@ -81,6 +81,24 @@ async def run_search(
                 clean_query = query
             logger.info("Auto-detected video filter from query: %s, cleaned query: '%s'", video_filter, clean_query)
 
+    # Auto-detect TRAKE sequence in KIS mode
+    if task_type == "KIS" and not events:
+        trake_markers = [
+            "bắt đầu", "kết thúc", "sau đó", "tiếp theo", "tiếp đến", "rồi", "cuối cùng",
+            "starts with", "ends with", "then", "next", "after that", "finally", "subsequently"
+        ]
+        import re
+        parts = [p.strip() for p in re.split(r'\.(?=\s|$)', clean_query) if p.strip()]
+        
+        has_marker = any(marker in clean_query.lower() for marker in trake_markers)
+        has_multiple_sentences = len(parts) >= 2
+        
+        # [DISABLED] Do not auto-upgrade KIS to TRAKE. It breaks KIS queries with 3 sentences.
+        # if (has_marker and has_multiple_sentences) or len(parts) >= 3:
+        #     logger.info("Auto-upgrading KIS to TRAKE due to sequential markers or multi-sentence paragraph. Parts: %s", len(parts))
+        #     task_type = "TRAKE"
+        #     events = parts
+
     if task_type == "TRAKE":
         trake_events = events or [clean_query.strip()]
         translated_events, translation_applied, translation_time_ms = await _translate_events(
@@ -101,7 +119,7 @@ async def run_search(
         try:
             translation = await asyncio.wait_for(
                 translator.translate_async(clean_query),
-                timeout=0.8,
+                timeout=4.0,
             )
             translation_time_ms = round((time.perf_counter() - started_at) * 1000, 2)
             en_text = translation.text

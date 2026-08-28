@@ -23,6 +23,7 @@ SMALL_OBJECT_KEYWORDS = {
     "crosswalk", "zebra", "stripe", "stripes", "marking", "lane",
     "điện thoại", "đồng hồ", "kính", "mũ", "nón", "biển số", "chai",
     "vạch", "vạch kẻ", "vạch trắng", "vạch đi bộ", "vạch qua đường",
+    "ship", "boat", "lion", "dragon", "thuyền", "tàu", "sư tử", "rồng",
 }
 
 

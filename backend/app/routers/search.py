@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 @router.post("/search")
-async def search(req: SearchRequest):
+def search(req: SearchRequest):
     """
     Unified search endpoint as required by AIC 2026 specification.
     Handles KIS, VQA, and TRAKE via the type field.
@@ -23,7 +23,9 @@ async def search(req: SearchRequest):
     """
     request_id = uuid4().hex
     try:
-        return await run_search(
+        from app.features.search.service import run_search
+        import asyncio
+        return asyncio.run(run_search(
             task_type=req.type,
             query=req.display_query(),
             question=req.question,
@@ -33,7 +35,7 @@ async def search(req: SearchRequest):
             max_gap_seconds=req.max_gap_seconds,
             video_filter=req.video_filter,
             request_id=request_id,
-        )
+        ))
     except BackendError as exc:
         raise HTTPException(status_code=exc.status_code, detail=exc.message) from exc
     except Exception as exc:
@@ -46,7 +48,7 @@ async def search(req: SearchRequest):
 
 
 @router.post("/search_trake")
-async def search_trake(req: SearchRequest):
+def search_trake(req: SearchRequest):
     """
     TRAKE-specific endpoint as required by AIC 2026 specification.
     Endpoint: POST /api/search_trake (with prefix="/api" in main.py)
@@ -55,7 +57,9 @@ async def search_trake(req: SearchRequest):
     """
     request_id = uuid4().hex
     try:
-        return await run_search(
+        from app.features.search.service import run_search
+        import asyncio
+        return asyncio.run(run_search(
             task_type="TRAKE",
             query=req.display_query(),
             question=req.question,
@@ -64,7 +68,7 @@ async def search_trake(req: SearchRequest):
             top_k_per_event=req.top_k_per_event,
             max_gap_seconds=req.max_gap_seconds,
             request_id=request_id,
-        )
+        ))
     except BackendError as exc:
         raise HTTPException(status_code=exc.status_code, detail=exc.message) from exc
     except RuntimeError as exc:
@@ -73,17 +77,21 @@ async def search_trake(req: SearchRequest):
 
 
 @router.post("/v1/search/kis", response_model=KisSearchResponse)
-async def search_kis(req: KisSearchRequest):
+def search_kis(req: KisSearchRequest):
     """Backward compatibility endpoint for version 1 API."""
-    return await run_kis_search(req.query, req.top_k)
+    from app.features.search_kis.service import run_kis_search
+    import asyncio
+    return asyncio.run(run_kis_search(req.query, req.top_k))
 
 
 @router.post("/v1/search")
-async def search_v1(req: SearchRequest):
+def search_v1(req: SearchRequest):
     """Backward compatibility endpoint for version 1 API."""
     request_id = uuid4().hex
     try:
-        return await run_search(
+        from app.features.search.service import run_search
+        import asyncio
+        return asyncio.run(run_search(
             task_type=req.type,
             query=req.display_query(),
             question=req.question,
@@ -92,7 +100,7 @@ async def search_v1(req: SearchRequest):
             top_k_per_event=req.top_k_per_event,
             max_gap_seconds=req.max_gap_seconds,
             request_id=request_id,
-        )
+        ))
     except BackendError as exc:
         raise HTTPException(status_code=exc.status_code, detail=exc.message) from exc
     except RuntimeError as exc:

@@ -13,11 +13,22 @@ STATIC_KEYFRAMES_DIR = Path("static/keyframes")
 def get_keyframe_name(video_id: str, target_frame_idx: str) -> str | None:
     map_file = MAP_KEYFRAMES_DIR / f"{video_id}.csv"
     if map_file.exists():
-        with open(map_file, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                if row.get('frame_idx') == target_frame_idx:
-                    return f"{int(row['n']):03d}.jpg"
+        try:
+            target = int(target_frame_idx)
+            closest_n = None
+            min_diff = float('inf')
+            with open(map_file, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    idx = int(row['frame_idx'])
+                    diff = abs(idx - target)
+                    if diff < min_diff:
+                        min_diff = diff
+                        closest_n = int(row['n'])
+            if closest_n is not None:
+                return f"{closest_n:03d}.jpg"
+        except ValueError:
+            pass
     return None
 
 @router.get("/preview")

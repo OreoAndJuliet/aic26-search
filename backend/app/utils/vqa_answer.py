@@ -1,4 +1,4 @@
-"""Universal Real-World VQA Question Categorization, Intent-Tailored Prompting, and Normalization."""
+﻿"""Universal Real-World VQA Question Categorization, Intent-Tailored Prompting, and Normalization."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from typing import Any
 
 MAX_VQA_ANSWER_LENGTH = 100
 
-# ── 1. Comprehensive Multi-Lingual Intent Pattern Definitions ───────────────────
+# â”€â”€ 1. Comprehensive Multi-Lingual Intent Pattern Definitions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 # Action & Activity
 ACTION_PATTERNS = [
@@ -25,18 +25,18 @@ ACTION_PATTERNS = [
     r"\bwearing\b",
     r"\bplaying\b",
     r"\bworking\b",
-    r"\blàm gì\b",
-    r"\bhành động\b",
-    r"\bhoạt động\b",
-    r"\bdiễn ra\b",
-    r"\bđang làm\b",
+    r"\blÃ m gÃ¬\b",
+    r"\bhÃ nh Ä‘á»™ng\b",
+    r"\bhoáº¡t Ä‘á»™ng\b",
+    r"\bdiá»…n ra\b",
+    r"\bÄ‘ang lÃ m\b",
 ]
 
 # Choice / Alternative (X or Y / X hay Y)
 CHOICE_PATTERNS = [
     r"\b\w+\s+or\s+\w+\b",
     r"\b\w+\s+hay\s+\w+\b",
-    r"\b\w+\s+hay là\s+\w+\b",
+    r"\b\w+\s+hay lÃ \s+\w+\b",
 ]
 
 # Text Reading / OCR / Signage
@@ -45,11 +45,11 @@ OCR_PATTERNS = [
     r"\b(?:written|printed|inscribed|displayed|shown)\s+on\b",
     r"\b(?:say|read|reads|spell|spells)\b",
     r"\b(?:sign|billboard|banner|screen|shirt|plate|license plate|license|logo|title|headline|caption)\b",
-    r"\bchữ\b",
-    r"\bviết gì\b",
-    r"\bbiển số\b",
-    r"\btiêu đề\b",
-    r"\bđọc được gì\b",
+    r"\bchá»¯\b",
+    r"\bviáº¿t gÃ¬\b",
+    r"\bbiá»ƒn sá»‘\b",
+    r"\btiÃªu Ä‘á»\b",
+    r"\bÄ‘á»c Ä‘Æ°á»£c gÃ¬\b",
 ]
 
 # Time of Day & Weather / Environment
@@ -57,63 +57,63 @@ ENVIRONMENT_PATTERNS = [
     r"\b(?:time of day|day or night|daytime|nighttime|season)\b",
     r"\b(?:weather|temperature|climate|sunny|rainy|snowy|cloudy|foggy)\b",
     r"\b(?:lighting|indoor or outdoor|inside or outside)\b",
-    r"\bthời tiết\b",
-    r"\bban ngày\b",
-    r"\bban đêm\b",
-    r"\btrong nhà hay ngoài trời\b",
-    r"\bmùa gì\b",
+    r"\bthá»i tiáº¿t\b",
+    r"\bban ngÃ y\b",
+    r"\bban Ä‘Ãªm\b",
+    r"\btrong nhÃ  hay ngoÃ i trá»i\b",
+    r"\bmÃ¹a gÃ¬\b",
 ]
 
 # Emotion & Facial Expression
 EMOTION_PATTERNS = [
     r"\b(?:emotion|feeling|mood|facial expression|expression|sentiment)\b",
     r"\b(?:happy|sad|angry|smiling|crying|laughing|surprised|serious|bored)\b",
-    r"\bcảm xúc\b",
-    r"\bbiểu cảm\b",
-    r"\bvui hay buồn\b",
-    r"\btâm trạng\b",
+    r"\bcáº£m xÃºc\b",
+    r"\bbiá»ƒu cáº£m\b",
+    r"\bvui hay buá»“n\b",
+    r"\btÃ¢m tráº¡ng\b",
 ]
 
 # Role / Profession / Identity
 ROLE_PATTERNS = [
     r"\b(?:profession|job|occupation|role|career|title|identity)\b",
     r"\b(?:doctor|nurse|police|officer|chef|cook|driver|teacher|student|anchor|presenter|journalist|host|athlete|singer|actor)\b",
-    r"\bnghề nghiệp\b",
-    r"\bvai trò\b",
-    r"\bngười này làm nghề gì\b",
-    r"\blà ai\b",
+    r"\bnghá» nghiá»‡p\b",
+    r"\bvai trÃ²\b",
+    r"\bngÆ°á»i nÃ y lÃ m nghá» gÃ¬\b",
+    r"\blÃ  ai\b",
 ]
 
 # Material & Composition
 MATERIAL_PATTERNS = [
     r"\b(?:material|made of|composed of|texture|substance)\b",
     r"\b(?:wood|wooden|metal|metallic|glass|plastic|leather|fabric|cotton|paper|concrete|stone|gold|silver|ceramic)\b",
-    r"\bchất liệu\b",
-    r"\blàm bằng gì\b",
-    r"\bvật liệu\b",
+    r"\bcháº¥t liá»‡u\b",
+    r"\blÃ m báº±ng gÃ¬\b",
+    r"\bváº­t liá»‡u\b",
 ]
 
 # Object State & Condition
 STATE_PATTERNS = [
     r"\b(?:open or closed|on or off|turned on|turned off|empty or full|broken|intact)\b",
     r"\b(?:state of|condition of|status of)\b",
-    r"\bmở hay đóng\b",
-    r"\bbật hay tắt\b",
-    r"\bđầy hay vơi\b",
-    r"\bhỏng hay còn dùng được\b",
+    r"\bmá»Ÿ hay Ä‘Ã³ng\b",
+    r"\bbáº­t hay táº¯t\b",
+    r"\bÄ‘áº§y hay vÆ¡i\b",
+    r"\bhá»ng hay cÃ²n dÃ¹ng Ä‘Æ°á»£c\b",
 ]
 
 # Spatial Position & Direction
 SPATIAL_PATTERNS = [
     r"\b(?:which side|left or right|top or bottom|above or under|in front or behind|foreground or background|relative position)\b",
-    r"\bphía nào\b",
-    r"\bbên trái hay bên phải\b",
-    r"\bở trên hay ở dưới\b",
-    r"\bphía trước hay phía sau\b",
+    r"\bphÃ­a nÃ o\b",
+    r"\bbÃªn trÃ¡i hay bÃªn pháº£i\b",
+    r"\bá»Ÿ trÃªn hay á»Ÿ dÆ°á»›i\b",
+    r"\bphÃ­a trÆ°á»›c hay phÃ­a sau\b",
 ]
 
 
-# ── 2. Intent Detection Helper Functions ─────────────────────────────────────────
+# â”€â”€ 2. Intent Detection Helper Functions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 def is_action_question(question: str) -> bool:
     q_lower = question.lower()
@@ -160,7 +160,7 @@ def is_spatial_question(question: str) -> bool:
     return any(re.search(pat, q_lower) for pat in SPATIAL_PATTERNS)
 
 
-# ── 3. High-Accuracy VQA Prompt Builder ─────────────────────────────────────────
+# â”€â”€ 3. High-Accuracy VQA Prompt Builder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 def build_vqa_prompt(question: str, ocr_context: str = "") -> str:
     """Build optimized VQA prompt tailored specifically to the real-world question intent."""
@@ -172,7 +172,7 @@ def build_vqa_prompt(question: str, ocr_context: str = "") -> str:
     context = f"\nHint (Extracted OCR Text): {ocr_context}\n" if ocr_context else " "
 
     # 1. Count / Quantity
-    if any(phrase in q_lower for phrase in ["how many", "number of", "count", "quantity", "bao nhiêu", "mấy", "số lượng"]):
+    if any(phrase in q_lower for phrase in ["how many", "number of", "count", "quantity", "bao nhiÃªu", "máº¥y", "sá»‘ lÆ°á»£ng"]):
         return (
             "Answer using only the image. Count the requested objects accurately. "
             "Return JSON only in this exact shape: "
@@ -208,7 +208,7 @@ def build_vqa_prompt(question: str, ocr_context: str = "") -> str:
             "Describe the action using an active verb phrase in present continuous tense "
             "(e.g. 'chopping vegetables', 'stirring soup in pan', 'riding bicycle', 'walking down stairs', "
             "'speaking to audience', 'driving car', 'washing dishes', 'pouring water', 'reading book'). "
-            "Do NOT answer with static nouns alone — focus specifically on the action/verb. "
+            "Do NOT answer with static nouns alone â€” focus specifically on the action/verb. "
             "Return JSON only in this exact shape: "
             '{"answer": "<active verb phrase>"}. '
             f"Question: {clean_q}{context}"
@@ -269,7 +269,7 @@ def build_vqa_prompt(question: str, ocr_context: str = "") -> str:
         )
 
     # 11. Color
-    if any(phrase in q_lower for phrase in ["what color", "which color", "color of", "colour", "màu gì", "màu sắc"]):
+    if any(phrase in q_lower for phrase in ["what color", "which color", "color of", "colour", "mÃ u gÃ¬", "mÃ u sáº¯c"]):
         return (
             "Answer using only the image. Identify the primary color accurately. "
             "Return JSON only in this exact shape: "
@@ -279,7 +279,7 @@ def build_vqa_prompt(question: str, ocr_context: str = "") -> str:
         )
 
     # 12. Location / Setting / Place
-    if first_word in ("where",) or any(phrase in q_lower for phrase in ["where is", "located at", "what place", "ở đâu", "nơi nào", "địa điểm"]):
+    if first_word in ("where",) or any(phrase in q_lower for phrase in ["where is", "located at", "what place", "á»Ÿ Ä‘Ã¢u", "nÆ¡i nÃ o", "Ä‘á»‹a Ä‘iá»ƒm"]):
         return (
             "Answer using only the image. Describe the specific location or setting concisely. "
             "Return JSON only in this exact shape: "
@@ -289,7 +289,7 @@ def build_vqa_prompt(question: str, ocr_context: str = "") -> str:
         )
 
     # 13. Object / Entity / Text / Name (What, Which, Who, Name)
-    if first_word in ("what", "which", "who", "whom", "whose", "name", "cái", "ai", "vật"):
+    if first_word in ("what", "which", "who", "whom", "whose", "name", "cÃ¡i", "ai", "váº­t"):
         return (
             "Answer using only the image. Identify the specific object(s), person, text, or entity accurately. "
             "Return JSON only in this exact shape: "
@@ -318,7 +318,7 @@ def build_vqa_prompt(question: str, ocr_context: str = "") -> str:
     )
 
 
-# ── 4. Answer Extraction & Normalization ─────────────────────────────────────────
+# â”€â”€ 4. Answer Extraction & Normalization â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 def _strip_code_fence(text: str) -> str:
     cleaned = text.strip()
@@ -381,3 +381,4 @@ def parse_vqa_answer(raw_text: str, *, max_length: int = MAX_VQA_ANSWER_LENGTH) 
     if len(normalized) <= max_length:
         return normalized
     return normalized[:max_length].rstrip()
+

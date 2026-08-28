@@ -39,7 +39,8 @@ def _resolve_keyframe_id_from_map(video_id: str, frame_id: int) -> int | None:
 
 @router.get("/keyframes/{video_id}/{frame_id}.jpg")
 @router.head("/keyframes/{video_id}/{frame_id}.jpg")
-async def serve_keyframe_by_frame_id(video_id: str, frame_id: int) -> FileResponse:
+def serve_keyframe_by_frame_id(video_id: str, frame_id: int) -> FileResponse:
+    print(f"DEBUG: serve_keyframe_by_frame_id called for {video_id} {frame_id}")
     """Serve keyframe images using FE contract paths keyed by frame_id.
 
     Strategies:

@@ -52,6 +52,10 @@ class SentenceTransformerClipTextEncoder(TextEncoder):
                 device=device,
                 model_kwargs={"low_cpu_mem_usage": True},
             )
+            # Force truncation to prevent CLIP position embedding crashes
+            self._model.max_seq_length = 77
+            if hasattr(self._model, "tokenizer"):
+                self._model.tokenizer.model_max_length = 77
             self.provider_name = "sentence_transformers"
             self.device = device
         except (ImportError, OSError, RuntimeError) as exc:
@@ -61,18 +65,31 @@ class SentenceTransformerClipTextEncoder(TextEncoder):
         import os
         import sys
         old_stderr = sys.stderr
-        text = " ".join(text.split()[:30])
+        current_text = text
+        
         with open(os.devnull, "w") as devnull:
             sys.stderr = devnull
             try:
-                vector = self._model.encode(
-                    [text],
-                    show_progress_bar=False,
-                    normalize_embeddings=True,
-                    convert_to_numpy=True,
-                ).astype(np.float32, copy=False)
+                while len(current_text) > 0:
+                    try:
+                        vector = self._model.encode(
+                            [current_text],
+                            show_progress_bar=False,
+                            normalize_embeddings=True,
+                            convert_to_numpy=True,
+                        ).astype(np.float32, copy=False)
+                        break
+                    except ValueError as e:
+                        if "Sequence length" in str(e) or "max_position_embeddings" in str(e):
+                            next_len = len(current_text) * 2 // 3
+                            if next_len == 0 or next_len == len(current_text):
+                                raise e
+                            current_text = current_text[:next_len]
+                        else:
+                            raise e
             finally:
                 sys.stderr = old_stderr
+        
         if vector.shape[0] != 1:
             raise RetrievalUnavailableError("The text encoder returned an invalid embedding batch.")
         vector.setflags(write=False)
@@ -84,19 +101,38 @@ class SentenceTransformerClipTextEncoder(TextEncoder):
         import os
         import sys
         old_stderr = sys.stderr
-        texts = [" ".join(t.split()[:30]) for t in texts]
+        
+        vectors = []
         with open(os.devnull, "w") as devnull:
             sys.stderr = devnull
             try:
-                vectors = self._model.encode(
-                    texts,
-                    show_progress_bar=False,
-                    normalize_embeddings=True,
-                    convert_to_numpy=True,
-                ).astype(np.float32, copy=False)
+                for t in texts:
+                    current_t = t
+                    success = False
+                    while len(current_t) > 0:
+                        try:
+                            vec = self._model.encode(
+                                [current_t],
+                                show_progress_bar=False,
+                                normalize_embeddings=True,
+                                convert_to_numpy=True,
+                            ).astype(np.float32, copy=False)[0]
+                            vectors.append(vec)
+                            success = True
+                            break
+                        except ValueError as e:
+                            if "Sequence length" in str(e) or "max_position_embeddings" in str(e):
+                                next_len = len(current_t) * 2 // 3
+                                if next_len == 0 or next_len == len(current_t):
+                                    raise e
+                                current_t = current_t[:next_len]
+                            else:
+                                raise e
+                    if not success:
+                        vectors.append(np.zeros(512, dtype=np.float32))
             finally:
                 sys.stderr = old_stderr
-        return vectors
+        return np.array(vectors, dtype=np.float32)
 
     def encode_image(self, image_path: Path) -> np.ndarray:
         try:

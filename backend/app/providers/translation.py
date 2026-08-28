@@ -47,21 +47,58 @@ class MockTranslationProvider(TranslationProvider):
 @lru_cache(maxsize=512)
 def _google_gtx_translate_cached(text: str, timeout_seconds: float, api_base: str) -> str:
     session = requests.Session()
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+    translated = ""
+
+    # Cap the timeout per strategy to ensure the fallback chain executes quickly
+    req_timeout = min(timeout_seconds, 1.5)
+
+    # Strategy 1: Google Clients5 Chrome Extension API (High throughput, no 429)
     try:
         response = session.get(
-            f"{api_base}/translate_a/single",
-            params={"client": "gtx", "sl": "vi", "tl": "en", "dt": "t", "q": text},
-            timeout=timeout_seconds,
+            "https://clients5.google.com/translate_a/t",
+            params={"client": "dict-chrome-ex", "sl": "vi", "tl": "en", "q": text},
+            headers=headers,
+            timeout=req_timeout,
         )
-        response.raise_for_status()
-        result = response.json()
-        translated = "".join(item[0] for item in result[0] if item and item[0]).strip()
-    except requests.Timeout as exc:
-        raise TranslationUnavailableError("Translation provider request timed out.") from exc
-    except (requests.RequestException, ValueError, IndexError, TypeError) as exc:
-        raise TranslationUnavailableError("Translation provider request failed.") from exc
-    finally:
-        session.close()
+        if response.status_code == 200:
+            data = response.json()
+            if isinstance(data, list) and data:
+                translated = str(data[0]).strip()
+    except Exception:
+        pass
+
+    # Strategy 2: Google GTX Web Single Endpoint (Default fallback)
+    if not translated:
+        try:
+            response = session.get(
+                f"{api_base}/translate_a/single",
+                params={"client": "gtx", "sl": "vi", "tl": "en", "dt": "t", "q": text},
+                headers=headers,
+                timeout=req_timeout,
+            )
+            if response.status_code == 200:
+                result = response.json()
+                translated = "".join(item[0] for item in result[0] if item and item[0]).strip()
+        except Exception:
+            pass
+
+    # Strategy 3: MyMemory Translation API fallback
+    if not translated:
+        try:
+            response = session.get(
+                f"https://api.mymemory.translated.net/get?q={requests.utils.quote(text)}&langpair=vi|en",
+                timeout=req_timeout,
+            )
+            if response.status_code == 200:
+                res = response.json()
+                t_text = res.get("responseData", {}).get("translatedText", "")
+                if t_text:
+                    translated = t_text.strip()
+        except Exception:
+            pass
+
+    session.close()
 
     if not translated:
         raise TranslationUnavailableError("Translation provider returned empty text.")

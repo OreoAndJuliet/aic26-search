@@ -124,7 +124,8 @@ try {
         Remove-Item -Path $targetFolder -Recurse -Force
         Write-Success "Compressed archive created: $zipFile"
         $finalTarget = $zipFile
-    } else {
+    }
+    else {
         $finalTarget = $targetFolder
     }
 
@@ -136,7 +137,8 @@ try {
             $hashFile = "$finalTarget.sha256"
             "$hash  $(Split-Path $finalTarget -Leaf)" | Out-File -FilePath $hashFile -Encoding ASCII
             Write-Success "Checksum written to: $hashFile"
-        } else {
+        }
+        else {
             $manifest = @{}
             $allFiles = Get-ChildItem -Path $finalTarget -Recurse -File
             foreach ($f in $allFiles) {
@@ -162,7 +164,8 @@ try {
                     Remove-Item -Path "$($item.FullName).sha256" -Force -ErrorAction SilentlyContinue
                 }
             }
-        } else {
+        }
+        else {
             $oldFolders = Get-ChildItem -Path $resolvedDest -Filter "aic_snapshot_*" | Where-Object { $_.PSIsContainer } | Sort-Object LastWriteTime -Descending
             if ($oldFolders.Count -gt $Keep) {
                 $toDelete = $oldFolders | Select-Object -Skip $Keep
@@ -180,7 +183,8 @@ try {
     Write-Info "================================================================="
     exit 0
 
-} catch {
+}
+catch {
     Write-Err "Backup Operation Failed: $_"
     exit 1
 }

@@ -1,0 +1,8 @@
+Search successful.
+Original Query: trời tối
+Translated Text: it's dark
+Translation Applied: True
+Number of results: 20
+- L28_V004/1: 0.6618 (r_score: 0.6618)
+- L28_V007/1: 0.6601 (r_score: 0.6601)
+- L28_V002/1: 0.6598 (r_score: 0.6598)

@@ -31,8 +31,8 @@ ATTRIBUTE_PATTERNS = [
 
 # Primary entity nouns
 ENTITY_PATTERNS = [
-    r"\b(?:person|people|man|men|woman|women|child|children|boy|girl|police|officer|driver|rider|pedestrian|dog|cat|bird|horse|cow|car|bus|truck|bicycle|bike|motorbike|motorcycle|boat|ship|airplane|plane|train)\b",
-    r"\b(?:người|đàn ông|phụ nữ|trẻ em|bé trai|bé gái|công an|cảnh sát|tài xế|chó|mèo|chim|ngựa|bò|xe hơi|xe buýt|xe tải|xe đạp|xe máy|thuyền|máy bay|tàu hỏa)\b",
+    r"\b(?:person|people|man|men|woman|women|child|children|boy|girl|police|officer|driver|rider|pedestrian|dog|cat|bird|horse|cow|car|bus|truck|bicycle|bike|motorbike|motorcycle|boat|ship|airplane|plane|train|lion|dragon|costume|dance|helicopter|scooter)\b",
+    r"\b(?:người|đàn ông|phụ nữ|trẻ em|bé trai|bé gái|công an|cảnh sát|tài xế|chó|mèo|chim|ngựa|bò|xe hơi|xe buýt|xe tải|xe đạp|xe máy|thuyền|tàu|máy bay|tàu hỏa|sư tử|rồng|trang phục|múa|trực thăng)\b",
 ]
 
 # High-information vs low-information vocabulary for linguistic entropy
@@ -150,20 +150,24 @@ def decompose_query_concepts(query: str) -> dict[str, str]:
         logger.debug("Encyclopedic entity lookup error: %s", exc)
 
     if "entity" not in concepts:
+        entities = []
         for pat in ENTITY_PATTERNS:
-            match = re.search(pat, lower_q)
-            if match:
-                entity_word = match.group(0)
-                concepts["entity"] = f"a photo of {entity_word}"
-                break
+            matches = re.findall(pat, lower_q)
+            if matches:
+                entities.extend(matches)
+        if entities:
+            unique_ents = list(dict.fromkeys(entities))
+            concepts["entity"] = f"a photo of {' and '.join(unique_ents)}"
 
     # 2. Extract Attribute / Color
+    attributes = []
     for pat in ATTRIBUTE_PATTERNS:
-        match = re.search(pat, lower_q)
-        if match:
-            attr_phrase = match.group(0)
-            concepts["attribute"] = attr_phrase
-            break
+        matches = re.findall(pat, lower_q)
+        if matches:
+            attributes.extend(matches)
+    if attributes:
+        unique_attrs = list(dict.fromkeys(attributes))
+        concepts["attribute"] = " ".join(unique_attrs)
 
     # 3. Extract Action / Verb
     for pat in ACTION_PATTERNS:
